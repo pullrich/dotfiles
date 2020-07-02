@@ -1,19 +1,26 @@
 if filereadable("./work.vimrc.vim")
+    echom "sourcing ./work.vimrc.vim"
     source ./work.vimrc.vim
+else
+    echom "not sourcing work.vimrc.vim"
 endif
 
 " fileencoding for this file: utf-8
 set nocompatible
+set noerrorbells
 filetype off       " required by vundle??
 
-set tabstop=4
+set tabstop=4 softtabstop=4
 set expandtab
+set smartindent " ? check!
+set smartcase " ? check!
 set shiftwidth=4
 set history=20  
 set ruler          " Show the cursor position all the time
-syntax on
-set number
+set number relativenumber
 set showtabline=2  " Always show the tabline.
+"set nohlsearch
+set ignorecase
 
 " see: https://shapeshed.com/vim-statuslines/
 set laststatus=2     " Always show status line (for window)
@@ -36,6 +43,10 @@ set nowrap
 
 set colorcolumn=72,80,160
 highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+set guifont=Hack:h9
+colorscheme evening
+syntax on
 
 " Vundle
 
@@ -61,10 +72,6 @@ call vundle#end()            " required
 " ^- Warum will Vundle dies angeschaltet haben?
 
 
-" My changes
-"set nohlsearch
-set relativenumber
-set ignorecase
 let g:snips_author="Pascal Ullrich"
 
 
@@ -141,6 +148,7 @@ endfunction
 nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 " Use jk as escape key in insert-mode.
 inoremap jk <esc>
+inoremap kj <ESC>
 inoremap <esc> <nop>
 
 " On a german keyboard it seems more intuitive to go forward without using a
@@ -150,4 +158,9 @@ nnoremap , ;
 nnoremap ; ,
 vnoremap , ;
 vnoremap ; ,
+
+command Cvim execute ':e ~\vimfiles\vimrc'
+" Open vimrc (on Windows) when running the comamnd :Cvim.
+autocmd GUIEnter * simalt ~x
+" Start vim in full screen mode on Windows.
 
