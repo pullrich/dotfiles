@@ -42,10 +42,14 @@ set incsearch
 set nowrap
 
 set colorcolumn=72,80,160
-highlight ColorColumn ctermbg=0 guibg=lightgrey
+"colorscheme evening
+" colorscheme evening does not work as expected in windows/gvim.
+" in combination with the following 
+"     [highlight ColorColumn ctermbg=0 guibg=LightGrey]
+" line the result ist red (!!) ColorColumns instead of LightGray. 
+highlight ColorColumn ctermbg=0 guibg=LightGrey
 
 set guifont=Hack:h9
-colorscheme evening
 syntax on
 
 " Vundle
@@ -161,6 +165,6 @@ vnoremap ; ,
 
 command Cvim execute ':e ~\vimfiles\vimrc'
 " Open vimrc (on Windows) when running the comamnd :Cvim.
-autocmd GUIEnter * simalt ~x
+"autocmd GUIEnter * simalt ~x
 " Start vim in full screen mode on Windows.
 
