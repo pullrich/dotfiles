@@ -1,5 +1,5 @@
-if [ -f ./work_aliases.bashrc ]; then
-    . ./work_aliases.bashrc
+if [ -f ./work.bashrc ]; then
+    . ./work.bashrc
 fi
 
 # file permissions: rwxr-xr-x
@@ -46,20 +46,20 @@ alias shck='shellcheck -s sh'
 alias cbash='vim ~/.bashrc'
 alias cvim='vim ~/.vimrc'
 
-
+#BASE_PROMPT="USER@HOST SHELL_LEVEL"
+BASE_PROMPT="\u@\h (`tty | sed 's/\/dev\///'`) \w \#SHELL_LEVEL\n>"
 # Promp Definition 
 if [ "x$SHLVL" = "x1" ]; then
-    #PS1="=== \u@\h (`tty | sed 's/\/dev\///'`) \w \# -> "
-
-    BASE_PROMPT="=== \u@\h (`tty | sed 's/\/dev\///'`) \w \# -> "
-    PS1="\e[1;32m$BASE_PROMPT\e[m "
+    BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/}"
+    # replace SHELL_LEVEL with nothing
 
     #PS1="\[\e[32m\][\[\e[m\]\[\e[31m\]\u\[\e[m\]\[\e[33m\]@\[\e[m\]\[\e[32m\]\h\[\e[m\]:\[\e[36m\]\w\[\e[m\]\[\e[32m\]]\[\e[m\]\[\e[32;47m\]\\$\[\e[m\] "
 else
-    #PS1="=== \u@\h (`tty | sed 's/\/dev\///'`) \w \#($SHLVL) -> "
-    BASE_PROMPT="=== \u@\h (`tty | sed 's/\/dev\///'`) \w \#($SHLVL) -> "
-    PS1="\e[1;32m$BASE_PROMPT\e[m "
+    BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/($SHLVL)}"
+    # replace SHELL_LEVEL with variable value
 fi
+PS1="\e[1;32m$BASE_PROMPT\e[m "
+# Color propmt green.
 
 PS2="\u@\h \w \! ++ "
 
