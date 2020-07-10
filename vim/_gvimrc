@@ -1,2 +1,3 @@
+set encoding=utf-8
 set renderoptions=type:directx,renmode:2
 set guifont=Fira\ Code\ Medium
