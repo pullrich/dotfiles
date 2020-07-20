@@ -1,8 +1,9 @@
-if filereadable("./work.vimrc.vim")
-    echom "sourcing ./work.vimrc.vim"
-    source ./work.vimrc.vim
+let workvimrc = expand('~/work.vimrc.vim')
+if filereadable(workvimrc)
+    :silent !echo "sourcing work.vimrc.vim"
+    exec 'source' workvimrc
 else
-    echom "not sourcing work.vimrc.vim"
+    :silent !echo "not sourcing work.vimrc.vim"
 endif
 
 " fileencoding for this file: utf-8
@@ -97,7 +98,6 @@ cnoremap <F6> <C-c>:set filetype=cobol<CR>
 " todo: open file under cursor but append .cob
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
-"nnoremap <F9> ea"<ESC>bi"$<ESC>
 nnoremap <F9> diwi"$<C-r>""<ESC>
 " Make word double quoted shell variable
 
