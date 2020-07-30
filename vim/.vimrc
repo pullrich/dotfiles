@@ -98,7 +98,7 @@ cnoremap <F6> <C-c>:set filetype=cobol<CR>
 " todo: open file under cursor but append .cob
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
-nnoremap <F9> diwi"$<C-r>""<ESC>
+nnoremap <F9> T i"$<ESC>ea"<ESC>
 " Make word double quoted shell variable
 
 " Adjust first non-whitespace to column 44.
@@ -152,7 +152,7 @@ endfunction
 nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 " Use jk as escape key in insert-mode.
 inoremap jk <esc>
-inoremap kj <ESC>
+"inoremap kj <ESC>
 inoremap <esc> <nop>
 
 " On a german keyboard it seems more intuitive to go forward without using a
