@@ -1,5 +1,5 @@
-if [ -f ./work.bashrc ]; then
-    . ./work.bashrc
+if [ -f ~/work.bashrc ]; then
+    . ~/work.bashrc
 fi
 
 # file permissions: rwxr-xr-x
@@ -64,16 +64,4 @@ PS1="\e[1;32m$BASE_PROMPT\e[m "
 PS2="\u@\h \w \! ++ "
 
 SVN_EDITOR="vim"; export SVN_EDITOR;
-
-function cdatetime() {
-    date +'%Y-%m-%dT%H-%M-%S'
-}
-
-function cdate() {
-    date +'%Y-%m-%d'
-}
-
-function ctime() {
-    date +'%H-%M-%S'
-}
 
