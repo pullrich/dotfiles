@@ -9,7 +9,7 @@ endif
 " fileencoding for this file: utf-8
 set nocompatible
 set noerrorbells
-filetype off       " required by vundle??
+"filetype off       " required by vundle??
 
 set tabstop=4 softtabstop=4
 set expandtab
@@ -51,31 +51,46 @@ set colorcolumn=72,80,160
 highlight ColorColumn ctermbg=0 guibg=LightGrey
 
 set guifont=Hack:h9
-syntax on
+"syntax on
 
 " Vundle
 
-" For Vundle info see: https://github.com/VundleVim/Vundle.vim
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"    " For Vundle info see: https://github.com/VundleVim/Vundle.vim
+"    " set the runtime path to include Vundle and initialize
+"    set rtp+=~/.vim/bundle/Vundle.vim
+"    call vundle#begin()
+"    
+"    " let Vundle manage Vundle, required
+"    Plugin 'VundleVim/Vundle.vim'
+"    
+"    Plugin 'tpope/vim-surround'
+"    Plugin 'tpope/vim-repeat'
+"    
+"    Plugin 'MarcWeber/vim-addon-mw-utils'
+"    Plugin 'tomtom/tlib_vim'
+"    Plugin 'garbas/vim-snipmate'
+"    Plugin 'honza/vim-snippets'
+"    
+"    " All of your Plugins must be added before the following line
+"    call vundle#end()            " required
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Plug
+" https://github.com/junegunn/vim-plug/wiki/tips#migrating-from-other-plugin-managers
+call plug#begin('~/.vim/bundle')
+"Plug 'junegunn/seoul256.vim'
+"Plug 'junegunn/goyo.vim'
+"Plug 'junegunn/limelight.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'vim-perl/vim-perl'
+call plug#end()
 
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-"filetype plugin indent on    " required
-" ^- Warum will Vundle dies angeschaltet haben?
-
+"filetype plugin indent on
+" ^- 2020-08-26: Prüfen, ob dies Probleme mit Cobol etc. bereite. Falls ja, ersteinmal ausschalten.
 
 let g:snips_author="Pascal Ullrich"
 
@@ -98,7 +113,7 @@ cnoremap <F6> <C-c>:set filetype=cobol<CR>
 " todo: open file under cursor but append .cob
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
-nnoremap <F9> T i"$<ESC>ea"<ESC>
+nnoremap <F9> T i"${<ESC>ea}"<ESC>
 " Make word double quoted shell variable
 
 " Adjust first non-whitespace to column 44.
@@ -163,8 +178,25 @@ nnoremap ; ,
 vnoremap , ;
 vnoremap ; ,
 
-command Cvim execute ':e ~\vimfiles\vimrc'
+command! Cvim execute ':e ~\vimfiles\vimrc'
 " Open vimrc (on Windows) when running the comamnd :Cvim.
 "autocmd GUIEnter * simalt ~x
 " Start vim in full screen mode on Windows.
 
+autocmd FileType cobol setlocal textwidth=72
+
+set autoread
+
+" Trigger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+    \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+    \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+" https://stackoverflow.com/questions/36900578/correct-syntax-highlighting-on-subroutine-signatures-in-vim
+let perl_sub_signatures=1
