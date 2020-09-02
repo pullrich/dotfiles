@@ -68,3 +68,5 @@ PS2="\u@\h \w \! ++ "
 
 SVN_EDITOR="vim"; export SVN_EDITOR;
 
+set -o vi
+
