@@ -43,7 +43,7 @@ alias svnckn='svn commit --keep-changelists --no-unlock'
 alias grep='grep --extended-regexp'
 
 # ShellCheck mit Parameter für POSIX Shell
-alias shck='shellcheck -s sh'
+alias shellcheck='shellcheck -s sh'
 
 # c = configure ... bash, etc.
 alias cbash='vim ~/.bashrc'
