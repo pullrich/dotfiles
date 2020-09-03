@@ -1,0 +1,4 @@
+#!/bin/sh
+
+svn st --changelist "$1" | tail -n +3 | cut -c 9- | xargs svn unlock
+
