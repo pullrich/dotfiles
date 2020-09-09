@@ -20,6 +20,10 @@ bind '"\e[Z":menu-complete-backward'
 # in sh(1), e.g. C-a -> beginning-of-line.
 # set -o emacs
 
+HISTSIZE=1000
+HISTFILESIZE=1000
+export HISTCONTROL=ignoredups
+
 PAGER="less"; export PAGER;
 
 # some useful aliases
