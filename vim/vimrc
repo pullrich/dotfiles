@@ -201,3 +201,6 @@ autocmd FileChangedShellPost *
 
 " https://stackoverflow.com/questions/36900578/correct-syntax-highlighting-on-subroutine-signatures-in-vim
 let perl_sub_signatures=1
+
+" see: :help viminfo, :help 'viminfo'|'vi
+set viminfo='20,<1000,s1000
