@@ -54,7 +54,7 @@ alias cbash='vim ~/.bashrc'
 alias cvim='vim ~/.vimrc'
 
 #BASE_PROMPT="USER@HOST SHELL_LEVEL"
-BASE_PROMPT="\u@\h (`tty | sed 's/\/dev\///'`) \w \#SHELL_LEVEL\n>"
+BASE_PROMPT="\u@\h (`tty | sed 's/\/dev\///'`) \w \#SHELL_LEVEL"
 # Promp Definition 
 if [ "x$SHLVL" = "x1" ]; then
     BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/}"
@@ -65,8 +65,16 @@ else
     BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/($SHLVL)}"
     # replace SHELL_LEVEL with variable value
 fi
-PS1="\e[1;32m$BASE_PROMPT\e[m "
-# Color propmt green.
+# PSP Prompt String Part
+# see: https://unix.stackexchange.com/a/105974
+# green and base prompt
+PSP_1="\[\e[1;32m\]${BASE_PROMPT}"
+# remove color
+PSP_2="\[\e[00m\]"
+# prompt symbol on new line
+PSP_3='\n$ '
+PS1="${PSP_1}${PSP_2}${PSP_3}"
+#PS1="\e[1;32m$BASE_PROMPT\e[m " / old
 
 PS2="\u@\h \w \! ++ "
 
