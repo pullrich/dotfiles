@@ -169,7 +169,7 @@ nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 " Use jk as escape key in insert-mode.
 inoremap jk <esc>
 "inoremap kj <ESC>
-inoremap <esc> <nop>
+"inoremap <esc> <nop>
 
 " On a german keyboard it seems more intuitive to go forward without using a
 " modifier key - like with f and t.
