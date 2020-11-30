@@ -1,6 +1,12 @@
 if [ -f ~/work.bashrc ]; then
     . ~/work.bashrc
 fi
+if [ -f ~/universal-aliases.sh ]; then
+    . ~/universal-aliases.sh
+fi
+if [ -f ~/work-aliases.sh ]; then
+    . ~/work-aliases.sh
+fi
 
 # file permissions: rwxr-xr-x
 #
@@ -39,12 +45,15 @@ alias l='ls -l'
 alias c='clear'
 alias g='gmake'
 alias gi='gmake install'
+alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
 alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
 alias vimeod='vim -S ~/vimsess/eod-session.vim' # start vim with eod-session (end of day).
 alias vi='vim'
 # svn (c)ommit (k)eep... (n)o...
 alias svnckn='svn commit --keep-changelists --no-unlock'
 alias grep='grep --extended-regexp'
+alias grepp='pcregrep'
+alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
 
 # ShellCheck mit Parameter für POSIX Shell
 alias shellcheck='shellcheck -s sh'
@@ -53,8 +62,15 @@ alias shellcheck='shellcheck -s sh'
 alias cbash='vim ~/.bashrc'
 alias cvim='vim ~/.vimrc'
 
-#BASE_PROMPT="USER@HOST SHELL_LEVEL"
-BASE_PROMPT="\u@\h (`tty | sed 's/\/dev\///'`) \w \#SHELL_LEVEL"
+# Genauere Zeit vllt. über Perl: perl -MTime::HiRes=gettimeofday -MPOSIX=strftime -e '($s,$us) = gettimeofday(); printf "%d.%06d\n", $s, $us'
+# \t Zeit 24 in HH:MM:SS
+# \u User
+# \h Hostname
+# \w the current working  directory
+# Verwende "\$(my_function)" im Prompt-String um einen Funktionsaufruf für jeden neuen Prompt-String zu tätigen.
+# \# command number of this command
+
+BASE_PROMPT="[\u@\h] (`tty | sed 's/\/dev\///'`) \wSHELL_LEVEL \t \#"
 # Promp Definition 
 if [ "x$SHLVL" = "x1" ]; then
     BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/}"
