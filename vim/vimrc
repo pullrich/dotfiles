@@ -11,7 +11,8 @@ set nocompatible
 set noerrorbells
 "filetype off       " required by vundle??
 
-set tabstop=4 softtabstop=4
+set tabstop=4
+set softtabstop=4
 set expandtab
 set smartindent " ? check!
 set smartcase " ? check!
@@ -81,6 +82,7 @@ call plug#begin('~/.vim/bundle')
 "Plug 'junegunn/seoul256.vim'
 "Plug 'junegunn/goyo.vim'
 "Plug 'junegunn/limelight.vim'
+"Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'MarcWeber/vim-addon-mw-utils'
