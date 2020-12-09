@@ -1,3 +1,27 @@
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# https://superuser.com/a/753948
+pathappend() {
+  for ARG in "$@"
+  do
+    if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$ARG"
+    fi
+  done
+}
+
+pathprepend() {
+  for ((i=$#; i>0; i--));
+  do
+    ARG=${!i}
+    if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+        PATH="$ARG${PATH:+":$PATH"}"
+    fi
+  done
+}
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
 if [ -f ~/work.bashrc ]; then
     . ~/work.bashrc
 fi
@@ -8,18 +32,23 @@ if [ -f ~/work-aliases.sh ]; then
     . ~/work-aliases.sh
 fi
 
+
+
 # file permissions: rwxr-xr-x
 #
 umask	022
 
 [[ $- = *i* ]] && bind TAB:menu-complete
-# Aktiviere Tab-Vervollständigung. siehe: https://superuser.com/questions/59175/is-there-a-way-to-make-bash-more-tab-friendly
+# Aktiviere Tab-Vervollständigung.
+# siehe: https://superuser.com/questions/59175/is-there-a-way-to-make-bash-more-tab-friendly
 bind '"\e[Z":menu-complete-backward'
 # Mit Shift+Tab einen Eintrag in der Tab-Vervollständigung zurück gehen.
 
 # Netter Trick ...
-#sudo ls -l | sudo dd of=/prod/test.txt
-# ... falls man nicht in eine Datei umleiten darf (also "sudo ls -l > test.txt" ist nicht erlaubt) kann man es so dennoch erreichen.
+#     sudo ls -l | sudo dd of=/prod/test.txt
+# ... falls man nicht in eine Datei umleiten darf
+# (also "sudo ls -l > test.txt" ist nicht erlaubt)
+# kann man es so dennoch erreichen.
 # Siehe: https://stackoverflow.com/a/8213307
 
 # Uncomment next line to enable the builtin emacs(1) command line editor
@@ -51,8 +80,8 @@ alias vimeod='vim -S ~/vimsess/eod-session.vim' # start vim with eod-session (en
 alias vi='vim'
 # svn (c)ommit (k)eep... (n)o...
 alias svnckn='svn commit --keep-changelists --no-unlock'
-alias grep='grep --extended-regexp'
-alias grepp='pcregrep'
+alias grep='grep --color=auto'
+alias pcregrep='pcregrep --color=auto'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
 
 # ShellCheck mit Parameter für POSIX Shell
@@ -70,7 +99,7 @@ alias cvim='vim ~/.vimrc'
 # Verwende "\$(my_function)" im Prompt-String um einen Funktionsaufruf für jeden neuen Prompt-String zu tätigen.
 # \# command number of this command
 
-BASE_PROMPT="[\u@\h] (`tty | sed 's/\/dev\///'`) \wSHELL_LEVEL \t \#"
+BASE_PROMPT="\u@\h:(`tty | sed 's/\/dev\///'`):\wSHELL_LEVEL \t:\#"
 # Promp Definition 
 if [ "x$SHLVL" = "x1" ]; then
     BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/}"
