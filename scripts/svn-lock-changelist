@@ -1,4 +1,14 @@
 #!/bin/sh
 
-svn st --changelist "$1" | tail -n +3 | cut -c 9- | xargs svn lock
+# only changelist from argument
+# without header
+# only those files which are not locked
+# only paths/files
+# lock those files
+
+svn st --changelist "$1" \
+    | tail -n +3 \
+    | grep -E -i -v "^.....K" \
+    | cut -c 9- \
+    | xargs svn lock
 
