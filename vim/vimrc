@@ -1,11 +1,3 @@
-let workvimrc = expand('~/work.vimrc.vim')
-if filereadable(workvimrc)
-    :silent !echo "sourcing work.vimrc.vim"
-    exec 'source' workvimrc
-else
-    :silent !echo "not sourcing work.vimrc.vim"
-endif
-
 " fileencoding for this file: utf-8
 set nocompatible
 set noerrorbells
@@ -38,11 +30,13 @@ set statusline+=\ %l:%c " cursor line:column
 set hidden         " Allow modified buffers to be hidden.
 set noswapfile     " Do not create .swp files. - Use undodir and -file instead.
 set nobackup
+set nofixendofline
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set nowrap
 set backspace=indent,eol,start
+set ttyfast
 
 set colorcolumn=72,80,160
 "colorscheme evening
@@ -96,7 +90,6 @@ call plug#end()
 " ^- 2020-08-26: Prüfen, ob dies Probleme mit Cobol etc. bereite. Falls ja, ersteinmal ausschalten.
 
 let g:snips_author="Pascal Ullrich"
-
 
 set listchars=eol:¬,tab:»·,trail:~,extends:>,precedes:<,space:·
 " This is the definition when used for cobol dev. in xterm - without unicode.
@@ -168,10 +161,13 @@ function! Saveeods()
 endfunction
 
 nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
-" Use jk as escape key in insert-mode.
-inoremap jk <esc>
-"inoremap kj <ESC>
-"inoremap <esc> <nop>
+" Map alternatives to the <ESC> key (<C-[> already is)
+inoremap jj <esc>
+cnoremap jj <esc>
+inoremap kk <esc>
+cnoremap kk <esc>
+inoremap kj <esc>
+cnoremap kj <esc>
 
 " On a german keyboard it seems more intuitive to go forward without using a
 " modifier key - like with f and t.
@@ -206,3 +202,14 @@ let perl_sub_signatures=1
 
 " see: :help viminfo, :help 'viminfo'|'vi
 set viminfo='20,<1000,s1000
+
+
+" Read work vim configuration (keep last to override)
+let workvimrc = expand('~/work.vimrc.vim')
+if filereadable(workvimrc)
+    :silent !echo "sourcing work.vimrc.vim"
+    exec 'source' workvimrc
+else
+    :silent !echo "not sourcing work.vimrc.vim"
+endif
+
