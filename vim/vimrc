@@ -213,3 +213,13 @@ else
     :silent !echo "not sourcing work.vimrc.vim"
 endif
 
+" line-comment for XML-tag
+nnoremap <leader>u 0/<!--<CR>d4l<Esc>/--><CR>d3l<Esc>0j:nohls<CR>
+" Line-uncomment for XML-tag
+nnoremap <leader>c 0^i<!--<C-O>$--><Esc>0j
+" edit .vimrc
+nnoremap <leader>cv :edit ~/.vimrc
+" source .vimrc (wierdly breaks vim 2020-12-17)
+nnoremap <leader>svrc :source ~/.vimrc
+" go to section (Cobol)
+nnoremap <leader>gts "syiw/\v<C-R>s\s+section<CR>:nohls<CR>
