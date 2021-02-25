@@ -9,9 +9,12 @@ set expandtab
 set smartindent " ? check!
 set smartcase " ? check!
 set shiftwidth=4
+set shiftround
 set history=20  
 set ruler          " Show the cursor position all the time
-set number relativenumber
+" Trying to work without line numbers
+"set number
+"set relativenumber
 set showtabline=2  " Always show the tabline.
 "set nohlsearch
 set ignorecase
@@ -35,6 +38,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set nowrap
+"set nowrapscan
 set backspace=indent,eol,start
 set ttyfast
 
@@ -162,8 +166,9 @@ endfunction
 
 nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 " Map alternatives to the <ESC> key (<C-[> already is)
-inoremap jj <esc>
-cnoremap jj <esc>
+" 'jj' is impractical for me, because I often have to type 'jhjj' for german year abbreviation.
+"inoremap jj <esc>
+"cnoremap jj <esc>
 inoremap kk <esc>
 cnoremap kk <esc>
 inoremap kj <esc>
@@ -222,4 +227,4 @@ nnoremap <leader>cv :edit ~/.vimrc
 " source .vimrc (wierdly breaks vim 2020-12-17)
 nnoremap <leader>svrc :source ~/.vimrc
 " go to section (Cobol)
-nnoremap <leader>gts "syiw/\v<C-R>s\s+section<CR>:nohls<CR>
+nnoremap <leader>gts "syiw/\v\c<<C-R>s\s+section<CR>:nohls<CR>
