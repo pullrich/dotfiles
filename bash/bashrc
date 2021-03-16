@@ -40,7 +40,8 @@ fi
 #
 umask	022
 
-[[ $- = *i* ]] && bind TAB:menu-complete
+# if bash is interactive shell ... bind ... and allow Ctrl-S to search forward through history by deactivating XON/XOFF (in KDE Konsole)
+[[ $- = *i* ]] && bind TAB:menu-complete && stty -ixon
 # Aktiviere Tab-Vervollständigung.
 # siehe: https://superuser.com/questions/59175/is-there-a-way-to-make-bash-more-tab-friendly
 bind '"\e[Z":menu-complete-backward'
@@ -114,14 +115,11 @@ else
 fi
 # PSP Prompt String Part
 # see: https://unix.stackexchange.com/a/105974
-# green and base prompt
-PSP_1="\[\e[1;32m\]${BASE_PROMPT}"
-# remove color
-PSP_2="\[\e[00m\]"
-# prompt symbol on new line
-PSP_3='\n$ '
-PS1="${PSP_1}${PSP_2}${PSP_3}"
+color_green="\[\e[1;32m\]"
+no_color="\[\e[00m\]"
+
 #PS1="\e[1;32m$BASE_PROMPT\e[m " / old
+PS1="${color_green}${BASE_PROMPT}\n\$ ${no_color}"
 
 PS2="\u@\h \w \! ++ "
 
