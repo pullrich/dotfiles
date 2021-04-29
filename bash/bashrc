@@ -81,8 +81,6 @@ alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
 alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
 alias vimeod='vim -S ~/vimsess/eod-session.vim' # start vim with eod-session (end of day).
 alias vi='vim'
-# svn (c)ommit (k)eep... (n)o...
-alias svnckn='svn commit --keep-changelists --no-unlock'
 alias grep='grep --color=auto'
 alias pcregrep='pcregrep --color=auto'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
