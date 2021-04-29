@@ -1,4 +1,16 @@
 #!/bin/sh
 
+# Wenn es Argumente gibt ...
+if [ $# -gt 0 ]; then
+
+    # ... soll das d-Format verwendet werden?
+    if [ $1 = '-d' ]; then
+        # dotted version
+        date +'%Y%m%d.%H%M%S'
+        exit 0
+    fi
+fi
+
+# Standardformat
 date +'%Y-%m-%dT%H-%M-%S'
 
