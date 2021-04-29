@@ -12,9 +12,8 @@ set shiftwidth=4
 set shiftround
 set history=20  
 set ruler          " Show the cursor position all the time
-" Trying to work without line numbers
-"set number
-"set relativenumber
+set number
+set relativenumber
 set showtabline=2  " Always show the tabline.
 "set nohlsearch
 set ignorecase
@@ -42,7 +41,7 @@ set nowrap
 set backspace=indent,eol,start
 set ttyfast
 
-set colorcolumn=72,80,160
+set colorcolumn=72,80
 "colorscheme evening
 " colorscheme evening does not work as expected in windows/gvim.
 " in combination with the following 
@@ -188,6 +187,7 @@ command! Cvim execute ':e ~\vimfiles\vimrc'
 " Start vim in full screen mode on Windows.
 
 autocmd FileType cobol setlocal textwidth=72
+autocmd FileType cobol setlocal colorcolumn=72
 
 set autoread
 
@@ -226,5 +226,11 @@ nnoremap <leader>c 0^i<!--<C-O>$--><Esc>0j
 nnoremap <leader>cv :edit ~/.vimrc
 " source .vimrc (wierdly breaks vim 2020-12-17)
 nnoremap <leader>svrc :source ~/.vimrc
+"
 " go to section (Cobol)
-nnoremap <leader>gts "syiw/\v\c<<C-R>s\s+section<CR>:nohls<CR>
+nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>:nohls<CR>
+
+set makeprg=gmake
+set indentexpr=
+
+nnoremap <C-_> :echo 'word' expand('<cword>') 'has length' strlen(substitute(expand('<cword>'), '.', 'x', 'g'))<CR>
