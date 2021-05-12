@@ -69,9 +69,6 @@ alias h='fc -l'
 alias j=jobs
 # m: Enthält dann z.B. 'more' (statt less) als Pager.
 alias m='$PAGER'
-alias ll='ls -laFo'
-alias llh='ls -laFoh'
-alias l='ls -l'
 
 # Meine Aliase
 alias c='clear'
@@ -79,7 +76,7 @@ alias g='gmake'
 alias gi='gmake install'
 alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
 alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
-alias vimeod='vim -S ~/vimsess/eod-session.vim' # start vim with eod-session (end of day).
+alias vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session (end of day).
 alias vi='vim'
 alias grep='grep --color=auto'
 alias pcregrep='pcregrep --color=auto'
