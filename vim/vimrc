@@ -15,16 +15,15 @@ set ruler          " Show the cursor position all the time
 set number
 set relativenumber
 set showtabline=2  " Always show the tabline.
-"set nohlsearch
+set nohlsearch     " Do not highlight searched strings by default.
 set ignorecase
 
 " see: https://shapeshed.com/vim-statuslines/
 set laststatus=2     " Always show status line (for window)
 set statusline=      " Start with a clear statusline
 set statusline+=%F   " Always show the full path of the current file in the status line.
-set statusline+=\    
 set statusline+=\ %y " filetype eg. .txt .cob
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ %{&fileencoding?'fenc':'enc'}:%{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%  " % position in file
 set statusline+=\ %l:%c " cursor line:column
@@ -41,7 +40,7 @@ set nowrap
 set backspace=indent,eol,start
 set ttyfast
 
-set colorcolumn=72,80
+set colorcolumn=80
 "colorscheme evening
 " colorscheme evening does not work as expected in windows/gvim.
 " in combination with the following 
@@ -52,28 +51,7 @@ highlight ColorColumn ctermbg=0 guibg=LightGrey
 set guifont=Hack:h9
 "syntax on
 
-" Vundle
-
-"    " For Vundle info see: https://github.com/VundleVim/Vundle.vim
-"    " set the runtime path to include Vundle and initialize
-"    set rtp+=~/.vim/bundle/Vundle.vim
-"    call vundle#begin()
-"    
-"    " let Vundle manage Vundle, required
-"    Plugin 'VundleVim/Vundle.vim'
-"    
-"    Plugin 'tpope/vim-surround'
-"    Plugin 'tpope/vim-repeat'
-"    
-"    Plugin 'MarcWeber/vim-addon-mw-utils'
-"    Plugin 'tomtom/tlib_vim'
-"    Plugin 'garbas/vim-snipmate'
-"    Plugin 'honza/vim-snippets'
-"    
-"    " All of your Plugins must be added before the following line
-"    call vundle#end()            " required
-
-" Plug
+" Plug - plugin manager calls
 " https://github.com/junegunn/vim-plug/wiki/tips#migrating-from-other-plugin-managers
 call plug#begin('~/.vim/bundle')
 "Plug 'junegunn/seoul256.vim'
@@ -118,14 +96,21 @@ nnoremap <F9> T i"${<ESC>ea}"<ESC>
 " Make word double quoted shell variable
 
 " Adjust first non-whitespace to column 44.
-let @a='/\S44i 44|dw36|j'
+"let @a='/\S44i 44|dw36|j'
+function Myadjust()
+    if !exists("b:adjust")
+        echom "Bitte b:adjust definieren mit >  :let b:adjust = <spaltennr>"
+        return
+    endif
+    ":execute "normal! /\\S\<cr>" . b:adjust . "i \<esc>" . b:adjust . "|dw"
+    :execute "normal! " . b:adjust . "i \<esc>" . b:adjust . "|dw"
+endfunction
+nnoremap <silent> <leader>a :call Myadjust()<CR>
 
 " g<Ctrl+o> to create a new line below the cursor (Ctrl to prevent collision with 'go' command)
-"nmap g<C-O> o<ESC>k
-nmap g<C-O> ojkk
+nmap g<C-O> o<ESC>k
 " gO to create a new line above the cursor in normal mode
-"nmap gO O<ESC>j
-nmap gO Ojkj
+nmap gO O<ESC>j
 
 inoremap <leader>" ""<ESC>i
 inoremap <leader>( ()<ESC>i
@@ -157,6 +142,7 @@ function! InteractiveBufDelete()
     endwhile 
 
 endfunction
+nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 
 function! Saveeods()
     " ~ expansion works if put into a variable
@@ -165,7 +151,6 @@ function! Saveeods()
     echom 'eod (end of day) session saved to ' eodfile ' (HARD CODED)'
 endfunction
 
-nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 " Map alternatives to the <ESC> key (<C-[> already is)
 " 'jj' is impractical for me, because I often have to type 'jhjj' for german year abbreviation.
 "inoremap jj <esc>
@@ -230,7 +215,7 @@ nnoremap <leader>cv :edit ~/.vimrc
 nnoremap <leader>svrc :source ~/.vimrc
 "
 " go to section (Cobol)
-nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>:nohls<CR>
+nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>zz:nohls<CR>
 
 set makeprg=gmake
 set indentexpr=
@@ -244,5 +229,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " more natural split opening
-set splitbelow
 set splitright
+set splitbelow
+nnoremap <leader>wf :vsplit<CR>gf
+nnoremap <leader>wF :vsplit<CR>gF
