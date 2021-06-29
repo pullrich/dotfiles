@@ -36,7 +36,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set nowrap
-"set nowrapscan
+set nowrapscan " Wrap search if hitting file end/start
 set backspace=indent,eol,start
 set ttyfast
 
@@ -82,13 +82,26 @@ set listchars=eol:¬,tab:»·,trail:~,extends:>,precedes:<,space:·
 " Search and replace word under cursor using F4
 nnoremap <F4> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
 
-" Toggle whitespace display using <F5> key.
-nnoremap <F5> :set list!<CR>
-inoremap <F5> <C-o>:set list!<CR>
-cnoremap <F5> <C-c>:set list!<CR>
-nnoremap <F6> :set filetype=cobol<CR>
-inoremap <F6> <C-o>:set filetype=cobol<CR>
-cnoremap <F6> <C-c>:set filetype=cobol<CR>
+nnoremap <F5> :make<CR>
+inoremap <F5> <C-o>:make<CR>
+cnoremap <F5> <C-c>:make<CR>
+nnoremap <F6> :!gmake install<CR>
+inoremap <F6> <C-o>:!gmake install<CR>
+cnoremap <F6> <C-c>:!gmake install<CR>
+" update scripts
+nnoremap <F7> :!us<CR>
+inoremap <F7> <C-o>:!us<CR>
+cnoremap <F7> <C-c>:!us<CR>
+" kdiff3 current file with repo version
+nnoremap <F8> :!svdiff % &<CR>
+inoremap <F8> <C-o>:!svdiff % &<CR>
+cnoremap <F8> <C-c>:!svdiff % &<CR>
+
+" Toggle whitespace display using <F6> key.
+nnoremap <F4> :set list!<CR>
+inoremap <F4> <C-o>:set list!<CR>
+cnoremap <F4> <C-c>:set list!<CR>
+
 " todo: open file under cursor but append .cob
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
@@ -221,6 +234,8 @@ set makeprg=gmake
 set indentexpr=
 
 nnoremap <C-_> :echo 'word' expand('<cword>') 'has length' strlen(substitute(expand('<cword>'), '.', 'x', 'g'))<CR>
+" which section
+nnoremap <leader>ws ?section<CR>
 
 " easier split navigation
 nnoremap <C-J> <C-W><C-J>
