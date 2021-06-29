@@ -1,44 +1,42 @@
-export EDITOR=vim
+# ---------------------------   Funktionen    ----------------------------------
 
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# https://superuser.com/a/753948
+# https://github.com/rwxrob/dot/blob/main/.bashrc
+_pathclean() {
+ local arg
+ for arg in "$@"; do
+    # middle
+    PATH=${PATH//:${arg}:/:}
+    # front
+    PATH=${PATH/#${arg}:/}
+    # end
+    PATH=${PATH/%:${arg}/}
+    export PATH
+ done
+
+}
+
 pathappend() {
-  for ARG in "$@"
-  do
-    if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-        PATH="${PATH:+"$PATH:"}$ARG"
-    fi
+  local arg
+  for arg in "$@"; do
+    test -d "${arg}" || continue
+    _pathclean "${arg}"
+    export PATH="${PATH:+"${PATH}:"}${arg}"
   done
 }
 
 pathprepend() {
-  for ((i=$#; i>0; i--));
-  do
-    ARG=${!i}
-    if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-        PATH="$ARG${PATH:+":$PATH"}"
-    fi
+  local arg
+  for arg in "$@"; do
+    test -d "${arg}" || continue
+    export PATH="${arg}${PATH:+":${PATH}"}"
   done
 }
+
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
-
-if [ -f ~/work.bashrc ]; then
-    . ~/work.bashrc
-fi
-if [ -f ~/universal-aliases.sh ]; then
-    . ~/universal-aliases.sh
-fi
-if [ -f ~/work-aliases.sh ]; then
-    . ~/work-aliases.sh
-fi
-
-
-
 # file permissions: rwxr-xr-x
-#
 umask	022
+
 
 # if bash is interactive shell ... bind ... and allow Ctrl-S to search forward through history by deactivating XON/XOFF (in KDE Konsole)
 [[ $- = *i* ]] && bind TAB:menu-complete && stty -ixon
@@ -58,13 +56,24 @@ bind '"\e[Z":menu-complete-backward'
 # in sh(1), e.g. C-a -> beginning-of-line.
 # set -o emacs
 
-HISTSIZE=1000
-HISTFILESIZE=1000
-export HISTCONTROL=ignoredups
+# ---------------------------   Variables   ------------------------------------
+
+
+EDITOR=vim; export EDITOR;
+
+export HISTCONTROL=ignoreboth
+export HISTFILESIZE=10000
+export HISTSIZE=5000
+
+shopt -s histappend
 
 PAGER="less"; export PAGER;
+SVN_EDITOR="vim"; export SVN_EDITOR;
+LESS="--jump-target=.5"; export LESS;
 
-# some useful aliases
+
+
+# ---------------------------   Aliase   ---------------------------------------
 alias h='fc -l'
 alias j=jobs
 # m: Enthält dann z.B. 'more' (statt less) als Pager.
@@ -72,22 +81,22 @@ alias m='$PAGER'
 
 # Meine Aliase
 alias c='clear'
+alias cd..='cd ..'
 alias g='gmake'
-alias gi='gmake install'
 alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
 alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
 alias vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session (end of day).
 alias vi='vim'
-alias grep='grep --color=auto'
+alias grep='grep --color=auto -E'
 alias pcregrep='pcregrep --color=auto'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
-
-# ShellCheck mit Parameter für POSIX Shell
-alias shellcheck='shellcheck -s sh'
 
 # c = configure ... bash, etc.
 alias cbash='vim ~/.bashrc'
 alias cvim='vim ~/.vimrc'
+
+
+# ---------------------------   Prompt Definition   ----------------------------
 
 # Genauere Zeit vllt. über Perl: perl -MTime::HiRes=gettimeofday -MPOSIX=strftime -e '($s,$us) = gettimeofday(); printf "%d.%06d\n", $s, $us'
 # \t Zeit 24 in HH:MM:SS
@@ -97,7 +106,13 @@ alias cvim='vim ~/.vimrc'
 # Verwende "\$(my_function)" im Prompt-String um einen Funktionsaufruf für jeden neuen Prompt-String zu tätigen.
 # \# command number of this command
 
+ttyinfo=$(tty)
+ttyinfo=${ttyinfo##*dev/}
+#BASE_PROMPT="\u@\h:(tty:${ttyinfo}):\wSHELL_LEVEL \t:\#"
 BASE_PROMPT="\u@\h:(`tty | sed 's/\/dev\///'`):\wSHELL_LEVEL \t:\#"
+
+#PROMPT_COMMAND=
+
 # Promp Definition 
 if [ "x$SHLVL" = "x1" ]; then
     BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/}"
@@ -114,11 +129,17 @@ color_green="\[\e[1;32m\]"
 no_color="\[\e[00m\]"
 
 #PS1="\e[1;32m$BASE_PROMPT\e[m " / old
-PS1="${color_green}${BASE_PROMPT}\n\$ ${no_color}"
+PS1="${color_green}${BASE_PROMPT}\n\$${no_color} "
 
 PS2="\u@\h \w \! ++ "
 
-SVN_EDITOR="vim"; export SVN_EDITOR;
+#-------------------------------------------------------------------------------
+
 
 set -o vi
 
+#-------------------------------------------------------------------------------
+
+if [ -f ~/work.bashrc ]; then
+    . ~/work.bashrc
+fi
