@@ -1,32 +1,51 @@
 " fileencoding for this file: utf-8
 set nocompatible
 set noerrorbells
-"filetype off       " required by vundle??
 
 set tabstop=4
 set softtabstop=4
 set expandtab
-set smartindent " ? check!
-set smartcase " ? check!
+
+" ? check!
+set smartindent
+
+" Ignore casing when searching.
+set ignorecase
+
+" If an uppercase letter is used in a search adhere to casing altough in
+" general the casing will be ignored.
+set smartcase
+
 set shiftwidth=4
 set shiftround
 set history=20  
-set ruler          " Show the cursor position all the time
+
+" Show the cursor position all the time
+set ruler
+
 set number
 set relativenumber
 set showtabline=2  " Always show the tabline.
 set nohlsearch     " Do not highlight searched strings by default.
-set ignorecase
 
 " see: https://shapeshed.com/vim-statuslines/
-set laststatus=2     " Always show status line (for window)
-set statusline=      " Start with a clear statusline
-set statusline+=%F   " Always show the full path of the current file in the status line.
+" Always show status line (for window)
+set laststatus=2
+
+"------------------------------ build status line ------------------------------
+"
+" Start with a clear statusline
+set statusline=
+
+" Always show the full path of the current file in the status line.
+set statusline+=%F
 set statusline+=\ %y " filetype eg. .txt .cob
 set statusline+=\ %{&fileencoding?'fenc':'enc'}:%{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%  " % position in file
 set statusline+=\ %l:%c " cursor line:column
+
+"===============================================================================
 
 set hidden         " Allow modified buffers to be hidden.
 set noswapfile     " Do not create .swp files. - Use undodir and -file instead.
@@ -36,7 +55,10 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set nowrap
-set nowrapscan " Wrap search if hitting file end/start
+
+" Wrap search if hitting file end/start
+set nowrapscan
+
 set backspace=indent,eol,start
 set ttyfast
 
@@ -69,7 +91,7 @@ call plug#end()
 
 "filetype plugin indent on
 " ^- 2020-08-26: Prüfen, ob dies Probleme mit Cobol etc. bereitet. Falls ja, erst einmal ausschalten.
-filetype plugin on
+"filetype plugin on
 runtime macros/matchit.vim
 
 let g:snips_author="Pascal Ullrich"
@@ -231,7 +253,7 @@ nnoremap <leader>svrc :source ~/.vimrc
 nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>zz:nohls<CR>
 
 set makeprg=gmake
-set indentexpr=
+autocmd FileType cobol :set indentexpr=
 
 nnoremap <C-_> :echo 'word' expand('<cword>') 'has length' strlen(substitute(expand('<cword>'), '.', 'x', 'g'))<CR>
 " which section
