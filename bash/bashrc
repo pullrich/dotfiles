@@ -1,4 +1,4 @@
-# ---------------------------   Funktionen    ----------------------------------
+# ---------------------------   Functions    -----------------------------------
 
 # https://github.com/rwxrob/dot/blob/main/.bashrc
 _pathclean() {
@@ -18,8 +18,8 @@ _pathclean() {
 pathappend() {
   local arg
   for arg in "$@"; do
-    test -d "${arg}" || continue
     _pathclean "${arg}"
+    test -d "${arg}" || continue
     export PATH="${PATH:+"${PATH}:"}${arg}"
   done
 }
@@ -27,6 +27,7 @@ pathappend() {
 pathprepend() {
   local arg
   for arg in "$@"; do
+    _pathclean "${arg}"
     test -d "${arg}" || continue
     export PATH="${arg}${PATH:+":${PATH}"}"
   done
@@ -35,15 +36,15 @@ pathprepend() {
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # file permissions: rwxr-xr-x
-umask	022
-
+umask 022
 
 # if bash is interactive shell ... bind ... and allow Ctrl-S to search forward through history by deactivating XON/XOFF (in KDE Konsole)
 [[ $- = *i* ]] && bind TAB:menu-complete && stty -ixon
+
 # Aktiviere Tab-Vervollständigung.
 # siehe: https://superuser.com/questions/59175/is-there-a-way-to-make-bash-more-tab-friendly
-bind '"\e[Z":menu-complete-backward'
 # Mit Shift+Tab einen Eintrag in der Tab-Vervollständigung zurück gehen.
+bind '"\e[Z":menu-complete-backward'
 
 # Netter Trick ...
 #     sudo ls -l | sudo dd of=/prod/test.txt
@@ -56,24 +57,23 @@ bind '"\e[Z":menu-complete-backward'
 # in sh(1), e.g. C-a -> beginning-of-line.
 # set -o emacs
 
-# ---------------------------   Variables   ------------------------------------
-
-
-EDITOR=vim; export EDITOR;
+# ---------------------------   History  ---------------------------------------
 
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=10000
 export HISTSIZE=5000
-
 shopt -s histappend
 
-PAGER="less"; export PAGER;
-SVN_EDITOR="vim"; export SVN_EDITOR;
-LESS="--jump-target=.5"; export LESS;
+# ---------------------------   Variables   ------------------------------------
+
+export EDITOR=vim
+export PAGER=less
+export SVN_EDITOR=vim
+export LESS='eFRX --jump-target=.5'
 
 
 
-# ---------------------------   Aliase   ---------------------------------------
+# ---------------------------   Aliases   --------------------------------------
 alias h='fc -l'
 alias j=jobs
 # m: Enthält dann z.B. 'more' (statt less) als Pager.
@@ -90,6 +90,9 @@ alias vi='vim'
 alias grep='grep --color=auto -E'
 alias pcregrep='pcregrep --color=auto'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
+
+# The space at the end is necessary for it to work!
+alias sudo='sudo '
 
 # c = configure ... bash, etc.
 alias cbash='vim ~/.bashrc'
@@ -134,7 +137,6 @@ PS1="${color_green}${BASE_PROMPT}\n\$${no_color} "
 PS2="\u@\h \w \! ++ "
 
 #-------------------------------------------------------------------------------
-
 
 set -o vi
 
