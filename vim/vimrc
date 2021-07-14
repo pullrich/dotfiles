@@ -133,12 +133,12 @@ nnoremap <F9> T i"${<ESC>ea}"<ESC>
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
 function Myadjust()
-    if !exists("b:adjust")
-        echom "Bitte b:adjust definieren mit >  :let b:adjust = <spaltennr>"
+    " ra = right adjust
+    if !exists("b:ra")
+        echom "Bitte b:ra definieren mit >  :let b:ra = <spaltennr>"
         return
     endif
-    ":execute "normal! /\\S\<cr>" . b:adjust . "i \<esc>" . b:adjust . "|dw"
-    :execute "normal! " . b:adjust . "i \<esc>" . b:adjust . "|dw"
+    :execute "normal! " . b:ra . "i \<esc>" . b:ra . "|dw"
 endfunction
 nnoremap <silent> <leader>a :call Myadjust()<CR>
 
