@@ -57,7 +57,7 @@ set incsearch
 set nowrap
 
 " Wrap search if hitting file end/start
-set nowrapscan
+set wrapscan
 
 set backspace=indent,eol,start
 set ttyfast
@@ -124,14 +124,17 @@ nnoremap <F4> :set list!<CR>
 inoremap <F4> <C-o>:set list!<CR>
 cnoremap <F4> <C-c>:set list!<CR>
 
-" todo: open file under cursor but append .cob
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
-nnoremap <F9> T i"${<ESC>ea}"<ESC>
-" Make word double quoted shell variable
+
+" Make word shell variable surrounded by braces
+nnoremap <F9> e?\<<CR>i${<ESC>ea}<ESC>l
+" Make word double quoted shell variable surrounded by braces
+nnoremap <S-F9> e?\<<CR>i"${<ESC>ea}"<ESC>l
 
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
+
 function Myadjust()
     " ra = right adjust
     if !exists("b:ra")
