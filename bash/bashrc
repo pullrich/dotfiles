@@ -35,6 +35,8 @@ pathprepend() {
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+pathappend "${HOME}/scripts/general"
+
 # file permissions: rwxr-xr-x
 umask 022
 
