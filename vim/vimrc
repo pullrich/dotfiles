@@ -149,9 +149,11 @@ cnoremap <F4> <C-c>:set list!<CR>
 " todo: surround beginning|end of visual selection with <!--|-->
 
 " Make word shell variable surrounded by braces
-nnoremap <F9> e?\<<CR>i${<ESC>ea}<ESC>l
+" First insert-mode is entered, because when the word is the last one on the
+" line its preceding space might/will get deleted when just 'diw' ist used.
+nnoremap <F9> i<C-o>diw${<C-r>"}<ESC>l
 " Make word double quoted shell variable surrounded by braces
-nnoremap <S-F9> e?\<<CR>i"${<ESC>ea}"<ESC>l
+nnoremap <S-F9> i<C-o>diw"${<C-r>"}"<ESC>l
 
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
