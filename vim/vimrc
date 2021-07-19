@@ -25,8 +25,16 @@ set ruler
 
 set number
 set relativenumber
-set showtabline=2  " Always show the tabline.
-set nohlsearch     " Do not highlight searched strings by default.
+
+" Always show the tabline.
+set showtabline=2
+
+" Do not highlight searched strings by default.
+set nohlsearch
+
+" These amount to 'keep cursor on the center of the screen'
+set scrolloff=999
+set sidescrolloff=999
 
 " see: https://shapeshed.com/vim-statuslines/
 " Always show status line (for window)
@@ -39,16 +47,29 @@ set statusline=
 
 " Always show the full path of the current file in the status line.
 set statusline+=%F
-set statusline+=\ %y " filetype eg. .txt .cob
+
+" filetype eg. .txt .cob
+set statusline+=\ %y
+
+" If the fileencoding is different from the encoding, show the fileencoding.
 set statusline+=\ %{&fileencoding?'fenc':'enc'}:%{&fileencoding?&fileencoding:&encoding}
+
 set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%  " % position in file
-set statusline+=\ %l:%c " cursor line:column
+
+" % position in file
+set statusline+=\ %p%%
+
+" cursor line:column
+set statusline+=\ %l:%c
 
 "===============================================================================
 
-set hidden         " Allow modified buffers to be hidden.
-set noswapfile     " Do not create .swp files. - Use undodir and -file instead.
+" Allow modified buffers to be hidden.
+set hidden
+
+" Do not create .swp files.
+set noswapfile
+
 set nobackup
 set nofixendofline
 set undodir=~/.vim/undodir
@@ -57,7 +78,7 @@ set incsearch
 set nowrap
 
 " Wrap search if hitting file end/start
-set nowrapscan
+set wrapscan
 
 set backspace=indent,eol,start
 set ttyfast
