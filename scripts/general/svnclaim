@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Lock file and add to changelist.
+svn_claim() {
+    svn lock "$1" && svn changelist "$2" "$1"
+}
+
+svn_claim "$@"
