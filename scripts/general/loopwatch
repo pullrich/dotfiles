@@ -1,0 +1,8 @@
+#!/bin/sh
+cmd="$1"
+
+while true; do
+    date
+    eval "${cmd}"
+    sleep 1
+done
