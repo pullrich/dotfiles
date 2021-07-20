@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo -n "-> "; for a in "$@"; do echo -n "\"$a\" "; done; echo

@@ -25,8 +25,16 @@ set ruler
 
 set number
 set relativenumber
-set showtabline=2  " Always show the tabline.
-set nohlsearch     " Do not highlight searched strings by default.
+
+" Always show the tabline.
+set showtabline=2
+
+" Do not highlight searched strings by default.
+set nohlsearch
+
+" These amount to 'keep cursor on the center of the screen'
+"set scrolloff=999
+"set sidescrolloff=999
 
 " see: https://shapeshed.com/vim-statuslines/
 " Always show status line (for window)
@@ -39,16 +47,29 @@ set statusline=
 
 " Always show the full path of the current file in the status line.
 set statusline+=%F
-set statusline+=\ %y " filetype eg. .txt .cob
+
+" filetype eg. .txt .cob
+set statusline+=\ %y
+
+" If the fileencoding is different from the encoding, show the fileencoding.
 set statusline+=\ %{&fileencoding?'fenc':'enc'}:%{&fileencoding?&fileencoding:&encoding}
+
 set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%  " % position in file
-set statusline+=\ %l:%c " cursor line:column
+
+" % position in file
+set statusline+=\ %p%%
+
+" cursor line:column
+set statusline+=\ %l:%c
 
 "===============================================================================
 
-set hidden         " Allow modified buffers to be hidden.
-set noswapfile     " Do not create .swp files. - Use undodir and -file instead.
+" Allow modified buffers to be hidden.
+set hidden
+
+" Do not create .swp files.
+set noswapfile
+
 set nobackup
 set nofixendofline
 set undodir=~/.vim/undodir
@@ -128,9 +149,11 @@ cnoremap <F4> <C-c>:set list!<CR>
 " todo: surround beginning|end of visual selection with <!--|-->
 
 " Make word shell variable surrounded by braces
-nnoremap <F9> e?\<<CR>i${<ESC>ea}<ESC>l
+" First insert-mode is entered, because when the word is the last one on the
+" line its preceding space might/will get deleted when just 'diw' ist used.
+nnoremap <F9> i<C-o>diw${<C-r>"}<ESC>l
 " Make word double quoted shell variable surrounded by braces
-nnoremap <S-F9> e?\<<CR>i"${<ESC>ea}"<ESC>l
+nnoremap <S-F9> i<C-o>diw"${<C-r>"}"<ESC>l
 
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
@@ -271,5 +294,7 @@ nnoremap <C-H> <C-W><C-H>
 " more natural split opening
 set splitright
 set splitbelow
+" Split vertically and go to file
 nnoremap <leader>wf :vsplit<CR>gf
+" Split vertically and go to line in file
 nnoremap <leader>wF :vsplit<CR>gF

@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Mit freundlichen Grüßen,"
+getent passwd "$(whoami)" | cut -d: -f5
