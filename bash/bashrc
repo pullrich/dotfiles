@@ -71,7 +71,7 @@ shopt -s histappend
 export EDITOR=vim
 export PAGER=less
 export SVN_EDITOR=vim
-export LESS='eFRX --jump-target=.5'
+export LESS='FRX --jump-target=.5'
 
 
 
