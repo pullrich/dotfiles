@@ -92,6 +92,7 @@ alias vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session
 alias vi='vim'
 alias grep='grep --color=auto -E'
 alias pcregrep='pcregrep --color=auto'
+alias perl6r='rlwrap perl6'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
 
 # The space at the end is necessary for it to work!
@@ -149,6 +150,16 @@ pathappend \
     ~/scripts \
     /usr/local/go/bin
 
+bash_config_dir="${HOME}/.config/bash"
+if test -d "${bash_config_dir}"; then
+    files=$(find "${bash_config_dir}" -maxdepth 1 -regextype egrep -regex ".+\.(ba)?sh" -print)
+    for file in ${files}; do 
+        . "${file}"
+    done
+fi
+unset bash_config_dir files file
+
 if [ -f ~/work.bashrc ]; then
     . ~/work.bashrc
 fi
+
