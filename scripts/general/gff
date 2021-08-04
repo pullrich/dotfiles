@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sudo find / -iname '*'"$1"'*'
+
