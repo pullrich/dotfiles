@@ -74,7 +74,7 @@ set nobackup
 set nofixendofline
 set undodir=~/.vim/undodir
 set undofile
-set incsearch
+"set incsearch
 set nowrap
 
 " Wrap search if hitting file end/start
@@ -122,28 +122,41 @@ set listchars=eol:¬,tab:»·,trail:~,extends:>,precedes:<,space:·
 "set listchars=eol:Â¬,tab:â–¸\ ,trail:~,extends:>,precedes:<,space:Â·
 " This would be the unicode definition.
 
-" Search and replace word under cursor using F4
-nnoremap <F4> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
+"------------------------------------ mappings ---------------------------------
 
-nnoremap <F5> :make<CR>
-inoremap <F5> <C-o>:make<CR>
-cnoremap <F5> <C-c>:make<CR>
-nnoremap <F6> :!gmake install<CR>
-inoremap <F6> <C-o>:!gmake install<CR>
-cnoremap <F6> <C-c>:!gmake install<CR>
-" update scripts
-nnoremap <F7> :!us<CR>
-inoremap <F7> <C-o>:!us<CR>
-cnoremap <F7> <C-c>:!us<CR>
-" kdiff3 current file with repo version
-nnoremap <F8> :!svdiff % &<CR>
-inoremap <F8> <C-o>:!svdiff % &<CR>
-cnoremap <F8> <C-c>:!svdiff % &<CR>
+set showcmd
+
+"set leader key to space
+let mapleader=" "
+
+" Set timeout length to 500 ms
+set timeoutlen=300
+
+" Search and replace word under cursor using F4
+"nnoremap <F4> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
 
 " Toggle whitespace display using <F6> key.
 nnoremap <F4> :set list!<CR>
 inoremap <F4> <C-o>:set list!<CR>
 cnoremap <F4> <C-c>:set list!<CR>
+
+nnoremap <F5> :make<CR>
+inoremap <F5> <C-o>:make<CR>
+cnoremap <F5> <C-c>:make<CR>
+
+nnoremap <F6> :!gmake install<CR>
+inoremap <F6> <C-o>:!gmake install<CR>
+cnoremap <F6> <C-c>:!gmake install<CR>
+
+" update scripts
+nnoremap <F7> :!us<CR>
+inoremap <F7> <C-o>:!us<CR>
+cnoremap <F7> <C-c>:!us<CR>
+
+" kdiff3 current file with repo version
+nnoremap <F8> :!svdiff % &<CR>
+inoremap <F8> <C-o>:!svdiff % &<CR>
+cnoremap <F8> <C-c>:!svdiff % &<CR>
 
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
@@ -158,7 +171,8 @@ nnoremap <S-F9> i<C-o>diw"${<C-r>"}"<ESC>l
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
 
-function Myadjust()
+" 'function!' overwrites/redefines the function if it already exists
+function! Myadjust()
     " ra = right adjust
     if !exists("b:ra")
         echom "Bitte b:ra definieren mit >  :let b:ra = <spaltennr>"
@@ -184,7 +198,7 @@ set ssop-=folds      " do not store folds
 " associated buffers. Example input: 2 5,9 12
 " Hit Enter alone to exit. 
 function! InteractiveBufDelete()
-    let l:prompt = "Specify buffers to delete: "
+    let l:prompt = 'Specify buffers to delete: '
 
     ls | let bufnums = input(l:prompt)
     while strlen(bufnums)
@@ -207,19 +221,20 @@ nnoremap <silent> <leader>bd :call InteractiveBufDelete()<CR>
 
 function! Saveeods()
     " ~ expansion works if put into a variable
-    let eodfile = "~/vimsessions/eod-session.vim"
+    let eodfile = '~/vimsessions/eod-session.vim'
     exec ':mksession!' eodfile
     echom 'eod (end of day) session saved to ' eodfile ' (HARD CODED)'
 endfunction
 
+" Do not use these anymore. Use proper Esc or remap CapsLock or use Alt+hjkl.
 " Map alternatives to the <ESC> key (<C-[> already is)
 " 'jj' is impractical for me, because I often have to type 'jhjj' for german year abbreviation.
 "inoremap jj <esc>
 "cnoremap jj <esc>
-inoremap kk <esc>
-cnoremap kk <esc>
-inoremap kj <esc>
-cnoremap kj <esc>
+"inoremap kk <esc>
+"cnoremap kk <esc>
+"inoremap kj <esc>
+"cnoremap kj <esc>
 
 " On a german keyboard it seems more intuitive to go forward without using a
 " modifier key - like with f and t.
@@ -229,13 +244,16 @@ nnoremap ; ,
 vnoremap , ;
 vnoremap ; ,
 
-command! Cvim execute ':e ~\vimfiles\vimrc'
 " Open vimrc (on Windows) when running the comamnd :Cvim.
-"autocmd GUIEnter * simalt ~x
+command! WinCvim execute ':e ~\vimfiles\vimrc'
+
 " Start vim in full screen mode on Windows.
+"autocmd GUIEnter * simalt ~x
 
 autocmd FileType cobol setlocal textwidth=72
 autocmd FileType cobol setlocal colorcolumn=72
+" todo: How to do this?
+"autocmd FocusGained,BufEnter if FileType = cobol setlocal colorcolumn=72 textwidth=72
 
 set autoread
 
@@ -248,7 +266,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
 " Notification after file change
 " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
 autocmd FileChangedShellPost *
-    \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+    \ echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None
 
 " https://stackoverflow.com/questions/36900578/correct-syntax-highlighting-on-subroutine-signatures-in-vim
 let perl_sub_signatures=1
@@ -256,14 +274,20 @@ let perl_sub_signatures=1
 " see: :help viminfo, :help 'viminfo'|'vi
 set viminfo='20,<1000,s1000
 
+function! Report(msg)
+    execute ":silent !echo "a:msg
+    :silent echomsg a:msg
+    sleep 500m
+    :redraw!
+endfunction
 
 " Read work vim configuration (keep last to override)
 let workvimrc = expand('~/work.vimrc.vim')
 if filereadable(workvimrc)
-    :silent !echo "sourcing work.vimrc.vim"
     exec 'source' workvimrc
+    call Report('sourced work.vimrc.vim')
 else
-    :silent !echo "not sourcing work.vimrc.vim"
+    call Report('not sourcing work.vimrc.vim')
 endif
 
 " line-comment for XML-tag
@@ -281,7 +305,10 @@ nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>zz:nohls<CR>
 set makeprg=gmake
 autocmd FileType cobol :set indentexpr=
 
-nnoremap <C-_> :echo 'word' expand('<cword>') 'has length' strlen(substitute(expand('<cword>'), '.', 'x', 'g'))<CR>
+"nnoremap <C-_> :echo 'word [' . expand('<cword>') . '] has length' strlen(substitute(expand('<cword>'), '.', 'x', 'g'))<CR>
+nnoremap <leader>lw :echo 'word [' . expand('<cword>') . '] has length' strlen(expand('<cword>'))<CR>
+nnoremap <leader>lW :echo 'WORD [' . expand('<cWORD>') . '] has length' strlen(expand('<cWORD>'))<CR>
+
 " which section
 nnoremap <leader>ws ?section<CR>
 
@@ -298,3 +325,7 @@ set splitbelow
 nnoremap <leader>wf :vsplit<CR>gf
 " Split vertically and go to line in file
 nnoremap <leader>wF :vsplit<CR>gF
+
+" navigate through the argument list
+nnoremap <C-Right> :next<CR>
+nnoremap <C-Left>  :previous<CR>
