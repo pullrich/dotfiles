@@ -129,7 +129,7 @@ set showcmd
 "set leader key to space
 let mapleader=" "
 
-" Set timeout length to 500 ms
+" Set timeout length to x milliseconds
 set timeoutlen=300
 
 " Search and replace word under cursor using F4
@@ -154,9 +154,9 @@ inoremap <F7> <C-o>:!us<CR>
 cnoremap <F7> <C-c>:!us<CR>
 
 " kdiff3 current file with repo version
-nnoremap <F8> :!svdiff % &<CR>
-inoremap <F8> <C-o>:!svdiff % &<CR>
-cnoremap <F8> <C-c>:!svdiff % &<CR>
+nnoremap <F8> :!skdiff % &<CR>
+inoremap <F8> <C-o>:!skdiff % &<CR>
+cnoremap <F8> <C-c>:!skdiff % &<CR>
 
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
@@ -178,17 +178,22 @@ function! Myadjust()
         echom "Bitte b:ra definieren mit >  :let b:ra = <spaltennr>"
         return
     endif
-    :execute "normal! " . b:ra . "i \<esc>" . b:ra . "|dw"
+    :execute "normal! ".b:ra."i \<esc>".b:ra."|dw0".b:ra."|"
 endfunction
 nnoremap <silent> <leader>a :call Myadjust()<CR>
 
-" g<Ctrl+o> to create a new line below the cursor (Ctrl to prevent collision with 'go' command)
-nmap g<C-O> o<ESC>k
-" gO to create a new line above the cursor in normal mode
-nmap gO O<ESC>j
+"" g<Ctrl+o> to create a new line below the cursor (Ctrl to prevent collision with 'go' command)
+"nmap g<C-O> o<ESC>k
+"" gO to create a new line above the cursor in normal mode
+"nmap gO O<ESC>j
 
-inoremap <leader>" ""<ESC>i
-inoremap <leader>( ()<ESC>i
+" la = line above
+nnoremap <leader>la O<ESC>j
+" lb = line below
+nnoremap <leader>lb o<ESC>k 
+
+"inoremap <leader>" ""<ESC>i
+"inoremap <leader>( ()<ESC>i
 
 set ssop-=options    " do not store global and local values in a session
 set ssop-=folds      " do not store folds
@@ -281,6 +286,15 @@ function! Report(msg)
     :redraw!
 endfunction
 
+function! InWhichSection()
+    let flags = "nbW"
+    let sect_line = search('^\s\+\S\+\s\+section', flags)
+    let sect_str = getline(sect_line)
+    let sect_name = matchstr(sect_str, '\S\+')
+    echo 'In section ['.sect_name.']'
+endfunction
+nnoremap <leader>ws :call InWhichSection()
+
 " Read work vim configuration (keep last to override)
 let workvimrc = expand('~/work.vimrc.vim')
 if filereadable(workvimrc)
@@ -310,7 +324,7 @@ nnoremap <leader>lw :echo 'word [' . expand('<cword>') . '] has length' strlen(e
 nnoremap <leader>lW :echo 'WORD [' . expand('<cWORD>') . '] has length' strlen(expand('<cWORD>'))<CR>
 
 " which section
-nnoremap <leader>ws ?section<CR>
+"noremap <leader>ws ?section<CR>
 
 " easier split navigation
 nnoremap <C-J> <C-W><C-J>
