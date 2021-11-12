@@ -1,2 +1,2 @@
 #!/bin/sh
-vim "$(which $1)"
+vim "$(command -v $1)"
