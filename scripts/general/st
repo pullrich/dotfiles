@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # todo: check if in .svn or .git and run the fitting command
-svn status
+svn status "$@"
