@@ -59,6 +59,8 @@ bind '"\e[Z":menu-complete-backward'
 # in sh(1), e.g. C-a -> beginning-of-line.
 # set -o emacs
 
+shopt -s globstar
+
 # ---------------------------   History  ---------------------------------------
 
 export HISTCONTROL=ignoreboth
@@ -72,8 +74,7 @@ export EDITOR=vim
 export PAGER=less
 export SVN_EDITOR=vim
 export LESS='FRX --jump-target=.5'
-
-
+export SCRIPTS=${HOME}/scripts/general/
 
 # ---------------------------   Aliases   --------------------------------------
 alias h='fc -l'
@@ -94,6 +95,7 @@ alias grep='grep --color=auto -E'
 alias pcregrep='pcregrep --color=auto'
 alias perl6r='rlwrap perl6'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
+alias rlwrap='rlwrap '
 
 # The space at the end is necessary for it to work!
 alias sudo='sudo '
