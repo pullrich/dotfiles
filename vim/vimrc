@@ -4,6 +4,7 @@ set noerrorbells
 
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 set expandtab
 
 " ? check!
@@ -16,7 +17,6 @@ set ignorecase
 " general the casing will be ignored.
 set smartcase
 
-set shiftwidth=4
 set shiftround
 set history=20  
 

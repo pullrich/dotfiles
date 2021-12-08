@@ -1,2 +1,13 @@
 #!/bin/sh
-ls -haloFGT "$@"
+OS=$(uname)
+case "$OS" in
+    'Linux')
+        OS='Linux'
+        ls -haloFG "$@"
+        ;;
+    'FreeBSD')
+        OS='FreeBSD'
+        ls -haloFGT "$@"
+        ;;
+    *) ;;
+esac
