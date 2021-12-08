@@ -1,0 +1,74 @@
+#!/bin/sh
+#set -x
+#set -e
+
+print_usage() {
+  echo "usage: newx <name>"
+  echo "       newx -d [dir] <name>"
+  echo "            -h    show this help string"
+}
+
+test ! -n "${1}" && { print_usage; exit 1; }
+
+if test "$#" -gt 3; then
+  print_usage
+  exit 1
+fi
+
+dir="${SCRIPTS}"
+usedir=false
+
+while test $# -ge 1; do
+  case "$1" in
+    -d)
+      usedir=true
+      shift
+      dir="$1"
+      shift
+      ;;
+      
+    -h)
+      print_usage
+      exit 0
+      ;;
+      
+    *)
+      break
+      ;;
+  esac
+done
+
+if $usedir; then
+  test -d "${dir}" || { 
+    echo "Can not create script! Directory [${dir}] does not exist."
+    exit 1
+  }
+else
+  test ! -n "${SCRIPTS}" && { 
+    echo "SCRIPTS environment variable not set"
+    exit 1
+  }
+fi
+
+cmdname="$1"
+test ! -n "${1}" && { print_usage; exit 1; }
+
+path="${dir}/${cmdname}"
+
+if [ -e "${path}" ]; then
+  echo "${cmdname} already exists. Edit? "
+  read yes
+  case "${yes}" in
+    y|yes|ok|okay) exec vim "${path}"
+  esac
+  exit 0
+fi
+
+echo "Creating new command [${cmdname}] in directory [$(realpath ${dir})] - path [${path}]"
+read p
+
+touch "${path}" || exit 1
+printf "#!%s\n\n" "$(command -v bash)" > "${path}"
+printf "#!%s\n\n" "$(command -v sh)" >> "${path}"
+chmod +x "${path}" 
+exec vim +2 "${path}"
