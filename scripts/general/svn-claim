@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# call: <this script> <changelist name> <filepath>
+
+# Lock file and add to changelist.
+svn_claim() {
+    changelist="$1"
+    shift
+    for file in "$@"; do
+        svn lock "${file}" && svn changelist "${changelist}" "${file}"
+    done
+}
+
+svn_claim "$@"
