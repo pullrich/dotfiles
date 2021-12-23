@@ -18,7 +18,7 @@ set ignorecase
 set smartcase
 
 set shiftround
-set history=20  
+set history=1000 
 
 " Show the cursor position all the time
 set ruler
