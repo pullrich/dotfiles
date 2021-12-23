@@ -94,33 +94,38 @@ highlight ColorColumn ctermbg=0 guibg=LightGrey
 set guifont=Hack:h9
 "syntax on
 
-" Plug - plugin manager calls
-" https://github.com/junegunn/vim-plug/wiki/tips#migrating-from-other-plugin-managers
-call plug#begin('~/.vim/bundle')
-"Plug 'junegunn/seoul256.vim'
-"Plug 'junegunn/goyo.vim'
-"Plug 'junegunn/limelight.vim'
-"Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'
-Plug 'vim-perl/vim-perl'
-call plug#end()
+filetype plugin on
+
+" only load plugins if Plug detected
+if filereadable(expand("~/.vim/autoload/plug.vim"))
+  " Plug - plugin manager calls
+  " https://github.com/junegunn/vim-plug/wiki/tips#migrating-from-other-plugin-managers
+  call plug#begin('~/.vim/bundle')
+  "Plug 'junegunn/seoul256.vim'
+  "Plug 'junegunn/goyo.vim'
+  "Plug 'junegunn/limelight.vim'
+  "Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
+  Plug 'MarcWeber/vim-addon-mw-utils'
+  Plug 'tomtom/tlib_vim'
+  Plug 'garbas/vim-snipmate'
+  Plug 'honza/vim-snippets'
+  Plug 'vim-perl/vim-perl'
+  call plug#end()
+
+  let g:snips_author="Pascal Ullrich"
+endif
 
 "filetype plugin indent on
-" ^- 2020-08-26: Prüfen, ob dies Probleme mit Cobol etc. bereitet. Falls ja, erst einmal ausschalten.
-"filetype plugin on
+"  2020-08-26: Prüfen, ob dies Probleme mit Cobol etc. bereitet. Falls ja, erst einmal ausschalten.
+
 runtime macros/matchit.vim
 
-let g:snips_author="Pascal Ullrich"
-
+" The following is the definition when used for cobol development in xterm - without unicode.
 set listchars=eol:¬,tab:»·,trail:~,extends:>,precedes:<,space:·
-" This is the definition when used for cobol dev. in xterm - without unicode.
+" The following would be the unicode definition.
 "set listchars=eol:Â¬,tab:â–¸\ ,trail:~,extends:>,precedes:<,space:Â·
-" This would be the unicode definition.
 
 "------------------------------------ mappings ---------------------------------
 
@@ -135,7 +140,7 @@ set timeoutlen=300
 " Search and replace word under cursor using F4
 "nnoremap <F4> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
 
-" Toggle whitespace display using <F6> key.
+" Toggle whitespace display.
 nnoremap <F4> :set list!<CR>
 inoremap <F4> <C-o>:set list!<CR>
 cnoremap <F4> <C-c>:set list!<CR>
@@ -161,11 +166,12 @@ cnoremap <F8> <C-c>:!skdiff % &<CR>
 "vmap ,c <ESC>a--><ESC>'<i<!--<ESC>'>$
 " todo: surround beginning|end of visual selection with <!--|-->
 
-" Make word shell variable surrounded by braces
+" Make word-under-cursor a shell variable surrounded by braces.
 " First insert-mode is entered, because when the word is the last one on the
 " line its preceding space might/will get deleted when just 'diw' ist used.
 nnoremap <F9> i<C-o>diw${<C-r>"}<ESC>l
-" Make word double quoted shell variable surrounded by braces
+
+" Make word-under-cursor a double quoted shell variable surrounded by braces.
 nnoremap <S-F9> i<C-o>diw"${<C-r>"}"<ESC>l
 
 " Adjust first non-whitespace to column 44.
