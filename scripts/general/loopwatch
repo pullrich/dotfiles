@@ -1,8 +1,6 @@
 #!/bin/sh
-cmd="$1"
-
 while true; do
     date
-    eval "${cmd}"
+    eval "$@"
     sleep 1
 done
