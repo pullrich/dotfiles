@@ -99,6 +99,7 @@ alias rlwrap='rlwrap '
 
 # The space at the end is necessary for it to work!
 alias sudo='sudo '
+alias show-bindings="bind -p | grep -v '^#\|self-insert\|^$'"
 
 # c = configure ... bash, etc.
 alias cbash='vim ~/.bashrc'
