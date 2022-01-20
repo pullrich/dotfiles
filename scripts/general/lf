@@ -1,2 +1,1 @@
-#!/bin/sh
-ls -l | grep --extended-regexp --invert-match '^d'
+list-files-only
