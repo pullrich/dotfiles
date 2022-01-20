@@ -1,2 +1,2 @@
 #!/bin/sh
-ls -l | egrep -v '^d'
+ls -l | grep --extended-regexp --invert-match '^d'
