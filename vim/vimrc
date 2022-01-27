@@ -29,8 +29,8 @@ set relativenumber
 " Always show the tabline.
 set showtabline=2
 
-" Do not highlight searched strings by default.
-set nohlsearch
+" Set highlighting for search results.
+set hlsearch
 
 " These amount to 'keep cursor on the center of the screen'
 "set scrolloff=999
@@ -316,11 +316,14 @@ nnoremap <leader>u 0/<!--<CR>d4l<Esc>/--><CR>d3l<Esc>0j:nohls<CR>
 nnoremap <leader>c 0^i<!--<C-O>$--><Esc>0j
 " edit .vimrc
 nnoremap <leader>cv :edit ~/.vimrc
-" source .vimrc (wierdly breaks vim 2020-12-17)
-nnoremap <leader>svrc :source ~/.vimrc
+" source .vimrc
+nnoremap <leader>r :source ~/.vimrc
 "
 " go to section (Cobol)
 nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>zz:nohls<CR>
+
+" turn off highlighting for results of last search
+nnoremap <leader>nh :nohls<CR>
 
 set makeprg=gmake
 autocmd FileType cobol :set indentexpr=
