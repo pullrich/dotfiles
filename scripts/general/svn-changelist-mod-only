@@ -1,0 +1,3 @@
+#!/bin/sh
+changelist="$1"
+svn status --quiet --changelist "${changelist}" | grep ^M | grep --extended-regexp --only-matching "[^[:blank:]]+$"
