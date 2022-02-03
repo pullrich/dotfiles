@@ -1,0 +1,3 @@
+#!/bin/sh
+# svn (c)ommit (k)eep-changelists (n)o-unlock
+svn commit --keep-changelists --no-unlock "$@"
