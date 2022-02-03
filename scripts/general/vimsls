@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# vimsls - vim sessions list
+
+ls -ltr ~/vimsessions \
+| awk '/\.vim$/ { print $1, $2, $3, $4, $5, $6, $7, $8, " ~/vimsessions/"$9 }' \
+| column -t
