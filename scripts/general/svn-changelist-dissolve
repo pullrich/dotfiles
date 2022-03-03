@@ -1,0 +1,3 @@
+#!/bin/sh
+
+svn changelist --remove --recursive --changelist "$1" .
