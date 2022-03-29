@@ -41,6 +41,7 @@ set hlsearch
 set laststatus=2
 
 "------------------------------ build status line ------------------------------
+" BEGIN build status line {
 "
 " Start with a clear statusline
 set statusline=
@@ -61,6 +62,7 @@ set statusline+=\ %p%%
 
 " cursor line:column
 set statusline+=\ %l:%c
+" . END build status line }
 
 "===============================================================================
 
@@ -169,10 +171,12 @@ cnoremap <F8> <C-c>:!skdiff % &<CR>
 " Make word-under-cursor a shell variable surrounded by braces.
 " First insert-mode is entered, because when the word is the last one on the
 " line its preceding space might/will get deleted when just 'diw' ist used.
-nnoremap <F9> i<C-o>diw${<C-r>"}<ESC>l
+" mnemonic: sv = shell variable
+nnoremap <leader>sv i<C-o>diw${<C-r>"}<ESC>l
 
 " Make word-under-cursor a double quoted shell variable surrounded by braces.
-nnoremap <S-F9> i<C-o>diw"${<C-r>"}"<ESC>l
+" mnemonic: sv" = shell variable with "-quotes
+nnoremap <leader>sv" i<C-o>diw"${<C-r>"}"<ESC>l
 
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
@@ -301,15 +305,6 @@ function! InWhichSection()
 endfunction
 nnoremap <leader>ws :call InWhichSection()
 
-" Read work vim configuration (keep last to override)
-let workvimrc = expand('~/work.vimrc.vim')
-if filereadable(workvimrc)
-    exec 'source' workvimrc
-    call Report('sourced work.vimrc.vim')
-else
-    call Report('not sourcing work.vimrc.vim')
-endif
-
 " line-comment for XML-tag
 nnoremap <leader>u 0/<!--<CR>d4l<Esc>/--><CR>d3l<Esc>0j:nohls<CR>
 " Line-uncomment for XML-tag
@@ -364,4 +359,16 @@ function! s:VSetSearch(cmdtype)
     let @s = temp
 endfunction
 "" . END search for visual selection }
+
+set path+=./**
+"===============================================================================
+" Read work vim configuration
+" (keep last to override)
+let workvimrc = expand('~/work.vimrc.vim')
+if filereadable(workvimrc)
+    exec 'source' workvimrc
+    call Report('sourced work.vimrc.vim')
+else
+    call Report('not sourcing work.vimrc.vim')
+endif
 
