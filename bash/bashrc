@@ -107,10 +107,8 @@ alias j=jobs
 # m: Enthält dann z.B. 'more' (statt less) als Pager.
 alias m='$PAGER'
 
-# Meine Aliase
 alias c='clear'
 alias cd..='cd ..'
-alias g='gmake'
 alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
 alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
 alias gst='git status'
