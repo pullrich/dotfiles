@@ -53,6 +53,12 @@ up() {
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+if [ -r "${HOME}"/.bash.d/tools/qwe.bash ]; then
+    source "${HOME}"/.bash.d/tools/qwe.bash
+else
+    printf "Could not source qwe.bash."
+fi
+
 pathappend "${HOME}/scripts/general"
 
 # file permissions: rwxr-xr-x
