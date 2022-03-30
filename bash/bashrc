@@ -188,7 +188,16 @@ if test -d "${bash_config_dir}"; then
 fi
 unset bash_config_dir files file
 
+function fcd() {
+    local _first_matching_directory
+    _first_matching_directory=$( find -E . -type d -regex "$@" 2>/dev/null | head -n 1 )
+    if [ -d "${_first_matching_directory}" ]; then
+        cd "${_first_matching_directory}" || return
+    fi
+}
+
+#-------------------------------------------------------------------------------
+
 if [ -f ~/work.bashrc ]; then
     . ~/work.bashrc
 fi
-
