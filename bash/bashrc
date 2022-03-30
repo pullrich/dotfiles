@@ -176,7 +176,7 @@ set -o vi
 #-------------------------------------------------------------------------------
 
 pathappend \
-    ~/scripts \
+    ~/scripts/* \
     /usr/local/go/bin
 
 bash_config_dir="${HOME}/.config/bash"
