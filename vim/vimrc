@@ -93,7 +93,25 @@ set colorcolumn=80
 " line the result ist red (!!) ColorColumns instead of LightGray. 
 highlight ColorColumn ctermbg=0 guibg=LightGrey
 
-set guifont=Hack:h9
+" This block seems to disalbe the launch of gvim under FreeBSD KDE.
+"if has("gui_running")
+"  echo "yes, GUI\n"
+"  if has("gui_kde")
+"    echo "gui_kde\n"
+"  elseif has("gui_gtk2") || has("gui_gtk3")
+"    echo "gui_gtk2\n"
+"    set guifont=Courier\ New\ 10
+"  elseif has("x11")
+"    echo "x11\n"
+"    set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
+"  elseif has("gui_win32")
+"    echo "gui_win32\n"
+"    set guifont=Hack:h8
+"  endif
+"else
+"    echo "NO GUI\n"
+"endif
+
 "syntax on
 
 filetype plugin on
