@@ -98,7 +98,9 @@ shopt -s histappend
 export EDITOR=vim
 export PAGER=less
 export SVN_EDITOR=vim
-export LESS='FRX --jump-target=.5'
+
+# maybe add: --no-init
+export LESS='--ignore-case --RAW-CONTROL-CHARS --quit-if-one-screen --jump-target=.5'
 export SCRIPTS=${HOME}/scripts/general/
 
 # ---------------------------   Aliases   --------------------------------------
