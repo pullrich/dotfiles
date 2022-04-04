@@ -207,3 +207,7 @@ function fcd() {
 if [ -f ~/work.bashrc ]; then
     . ~/work.bashrc
 fi
+
+if [ -r "$HOME"/.rakubrew/bin/rakubrew ]; then
+    eval "$(${HOME}/.rakubrew/bin/rakubrew init Bash)"
+fi
