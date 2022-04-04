@@ -132,6 +132,10 @@ alias show-bindings="bind -p | grep -v '^#\|self-insert\|^$'"
 alias cbash='vim ~/.bashrc'
 alias cvim='vim ~/.vimrc'
 
+# perl awk - see .inputrc for »shell-expand-line« binding (default emacs mode: C-M-e)
+# -F implies -a autospit,  -n loop around
+alias pawk='perl -lF'"\'"'/ /'"\'"' -E '"\'"'print \$F[0]'"\'"
+
 
 # ---------------------------   Prompt Definition   ----------------------------
 ## BEGIN prompt definition {
