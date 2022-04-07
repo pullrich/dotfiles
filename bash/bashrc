@@ -108,14 +108,14 @@ alias h='fc -l'
 alias j=jobs
 # m: Enthält dann z.B. 'more' (statt less) als Pager.
 alias m='$PAGER'
-
 alias c='clear'
 alias cd..='cd ..'
+alias cp='cp -v '
 alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
 alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
 alias gst='git status'
 alias vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session (end of day).
-alias vi='vim'
+#alias vi='vim'
 alias grep='grep --color=auto --extended-regexp'
 alias pcregrep='pcregrep --color=auto'
 alias gitgrep='git grep --color=auto --no-index --extended-regexp --all-match'
