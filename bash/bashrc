@@ -123,6 +123,7 @@ alias perl6r='rlwrap perl6'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
 alias rlwrap='rlwrap '
 alias rm='rm -Iv '
+alias mv='mv -v '
 
 # The space at the end is necessary for it to work!
 alias sudo='sudo '
