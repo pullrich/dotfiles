@@ -12,14 +12,24 @@ set output-meta on
 # >>>>> set "missing" vi behaviour >>>>>
 set editing-mode vi
 
+# todo ... read READLINE in bash manpage
+#set show-mode-in-prompt on
+
+# See man readline "VI Mode bindings" for default vi bindings.
+
 # http://www.usenix.org.uk/content/bash.html#input
 #vi mode
 $if mode=vi
+
 set keymap vi-command
+
 Control-l: clear-screen
+
+# nice to have
 "#": insert-comment
-".": "i !*\r"
 "|": "A | "
+".": "i !*\r"
+
 "D":kill-line
 "C": "Da"
 "dw": kill-word
@@ -28,6 +38,9 @@ Control-l: clear-screen
 "cc": "ddi"
 "cw": "dwi"
 "cb": "dbi"
+
+"p": yank
+
 "daw": "lbdW"
 "yaw": "lbyW"
 "caw": "lbcW"
@@ -90,15 +103,36 @@ Control-l: clear-screen
 "G": end-of-history
 ?: reverse-search-history
 /: forward-search-history
-# expand alias
-"ea": shell-expand-line
+
+# ATTENTION!
+# For "gew" to work in command mode (after ESC and timeout) the cursor (or point) must be behind the glob pattern.
+# See READLINE in bash manpage. The description of glob-expand-word mentions "point" (the cursor).
+#
+# Example:  (cursor at | )
+# ls a*|  :  Will work.
+# ls a|*  :  Will not work.
+#
+# The tricky bit is, when the line is written up to * and ESC is then pressed the cursor jumps back one character.
+# The * is then not "visible" for the expansion. So the line must be written as follows (_ representing space, | cursor position or point):
+# ls_a*_|
+# ... then ESC ...
+# ls_a*|_
+# ... then gew
+# .
+"gew": glob-expand-word
+"gle": glob-list-expansions
+"sel": shell-expand-line
 
 set keymap vi-insert
 Control-l: clear-screen
 "\C-a": beginning-of-line
 "\C-e": end-of-line
-"\e[A": history-search-backward
-"\e[B": history-search-forward
+#"\e[A": history-search-backward
+#"\e[B": history-search-forward
+
+# The following turns into Ctrl-j ??? WHY?
+#"\C-*": glob-expand-word
+"\egew": glob-expand-word
 $endif
 # <<<<< set "missing" vi behaviour <<<<<
 
