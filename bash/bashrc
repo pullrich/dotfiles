@@ -212,3 +212,5 @@ fi
 if [ -r "$HOME"/.rakubrew/bin/rakubrew ]; then
     eval "$(${HOME}/.rakubrew/bin/rakubrew init Bash)"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
