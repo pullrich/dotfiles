@@ -378,6 +378,32 @@ function! s:VSetSearch(cmdtype)
 endfunction
 "" . END search for visual selection }
 
+" Let Y behave like other capital letters in Vim. Yank to end of line.
+nnoremap Y y$
+
+" Keep search results centered
+" n zz (center) zv (open folds if any)
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" join line below to current line without moving cursor using mark z
+nnoremap J mzJ`z
+
+" Create undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" Move text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> <esc>:m .+1<CR>==
+inoremap <C-k> <esc>:m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+
+
 set path+=./**
 "===============================================================================
 " Read work vim configuration
