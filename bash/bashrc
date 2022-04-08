@@ -56,7 +56,7 @@ up() {
 if [ -r "${HOME}"/.bash.d/tools/qwe.bash ]; then
     source "${HOME}"/.bash.d/tools/qwe.bash
 else
-    printf "Could not source qwe.bash."
+    printf "Could not source qwe.bash.\n"
 fi
 
 pathappend "${HOME}/scripts/general"
