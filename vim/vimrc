@@ -36,6 +36,10 @@ set hlsearch
 "set scrolloff=999
 "set sidescrolloff=999
 
+" Show at least some context lines if ie. a search match is on the last
+" visible line of the buffer.
+set scrolloff=8
+
 " see: https://shapeshed.com/vim-statuslines/
 " Always show status line (for window)
 set laststatus=2
