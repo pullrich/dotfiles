@@ -197,7 +197,7 @@ unset bash_config_dir files file
 
 function fcd() {
     local _first_matching_directory
-    _first_matching_directory=$( find -E . -type d -regex "$@" 2>/dev/null | head -n 1 )
+    _first_matching_directory=$( find -E . -type d -iregex ".*$@.*" 2>/dev/null | head -n 1 )
     if [ -d "${_first_matching_directory}" ]; then
         cd "${_first_matching_directory}" || return
     fi
