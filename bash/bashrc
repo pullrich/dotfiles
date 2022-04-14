@@ -121,6 +121,7 @@ alias pcregrep='pcregrep --color=auto'
 alias gitgrep='git grep --color=auto --no-index --extended-regexp --all-match'
 alias perl6r='rlwrap perl6'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
+alias aff='#sudo find . -iname '"'"'*filename*'"'"' -exec realpath {} \+'
 alias rlwrap='rlwrap '
 alias rm='rm -Iv '
 alias mv='mv -v '
