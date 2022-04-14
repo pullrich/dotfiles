@@ -122,6 +122,7 @@ Control-l: clear-screen
 "gew": glob-expand-word
 "gle": glob-list-expansions
 "sel": shell-expand-line
+"ael": alias-expand-line
 
 set keymap vi-insert
 Control-l: clear-screen
@@ -133,6 +134,7 @@ Control-l: clear-screen
 # The following turns into Ctrl-j ??? WHY?
 #"\C-*": glob-expand-word
 "\egew": glob-expand-word
+"\eael": alias-expand-line
 $endif
 # <<<<< set "missing" vi behaviour <<<<<
 
