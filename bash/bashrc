@@ -90,7 +90,7 @@ shopt -s globstar
 export HISTCONTROL=ignoreboth
 export HISTFILESIZE=10000
 export HISTSIZE=5000
-export HISTIGNORE="ls:ll:history*"
+export HISTIGNORE="history*"
 shopt -s histappend
 
 # ---------------------------   Variables   ------------------------------------
