@@ -68,7 +68,11 @@ echo "Creating new command [${cmdname}] in directory [$(realpath ${dir})] - path
 read p
 
 touch "${path}" || exit 1
+
+# Create shebang lines.
 printf "#!%s\n\n" "$(command -v bash)" > "${path}"
 printf "#!%s\n\n" "$(command -v sh)" >> "${path}"
+printf "#!%s\n\n" "$(command -v env)" >> "${path}"
+printf "#!%s\n\n" "$(command -v perl)" >> "${path}"
 chmod +x "${path}" 
 exec vim +2 "${path}"
