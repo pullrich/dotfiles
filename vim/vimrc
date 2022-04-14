@@ -289,6 +289,29 @@ command! WinCvim execute ':e ~\vimfiles\vimrc'
 
 autocmd FileType cobol setlocal textwidth=72
 autocmd FileType cobol setlocal colorcolumn=72
+
+" BEGIN get cobol right align column from script {
+function! SetCobolRightAlignColumn()
+    "echom 'filetype is: '.&filetype
+    " Check if FileType of current file/buffer is cobol (It can't just be
+    " *.cob because copybooks do not have a file extension.)
+    if &filetype != 'cobol' || exists("b:ra")
+        return
+    endif
+    
+    " TODO: Check if get_right_align_column.pl is available.
+    let b:ra=system('get_right_align_column.pl ' . shellescape(expand('%')))[:-2]
+    echom 'Setting right align column to ' . b:ra
+endfunction
+
+let save_shellredir = &shellredir
+set shellredir=>
+
+" See:  :help expr-[:]  for '[:-2]' : Take all characters/bytes but the last one.
+autocmd BufEnter * call SetCobolRightAlignColumn()
+let &shellredir = save_shellredir
+" . END get cobol right align column from script }
+
 " todo: How to do this?
 "autocmd FocusGained,BufEnter if FileType = cobol setlocal colorcolumn=72 textwidth=72
 
