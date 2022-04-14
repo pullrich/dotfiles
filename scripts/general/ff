@@ -1,4 +1,8 @@
 #!/bin/sh
+# --full-path|--fp|-f    den gesamten pfad anzeigen.
 
-sudo find . -iname '*'"$1"'*'
+# Dies zeigt den relativen Pfad.
+#sudo find . -iname '*'"$1"'*'
+
+sudo find . -iname '*'"$1"'*' -exec realpath {} \+ | grep -i "$1" --color=auto
 
