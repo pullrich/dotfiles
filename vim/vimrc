@@ -30,7 +30,7 @@ set relativenumber
 set showtabline=2
 
 " Set highlighting for search results.
-set hlsearch
+set nohlsearch
 
 " These amount to 'keep cursor on the center of the screen'
 "set scrolloff=999
