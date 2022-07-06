@@ -118,7 +118,7 @@ alias vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session
 #alias vi='vim'
 alias grep='grep --color=auto --extended-regexp'
 alias pcregrep='pcregrep --color=auto'
-alias gitgrep='git grep --color=auto --no-index --extended-regexp --all-match'
+alias gitgrep='git grep --color=auto --no-index --extended-regexp --all-match '
 alias perl6r='rlwrap perl6'
 alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
 alias aff='#sudo find . -iname '"'"'*filename*'"'"' -exec realpath {} \+'
