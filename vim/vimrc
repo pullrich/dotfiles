@@ -325,7 +325,7 @@ augroup trigger_autoread
     " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
     autocmd FileChangedShellPost *
         \ echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None
-autocmd END
+augroup END
 
 " https://stackoverflow.com/questions/36900578/correct-syntax-highlighting-on-subroutine-signatures-in-vim
 let perl_sub_signatures=1
