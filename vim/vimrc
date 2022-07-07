@@ -285,10 +285,10 @@ vnoremap ; ,
 command! WinCvim execute ':e ~\vimfiles\vimrc'
 
 " Start vim in full screen mode on Windows.
-"autocmd GUIEnter * simalt ~x
-
-autocmd FileType cobol setlocal textwidth=72
-autocmd FileType cobol setlocal colorcolumn=72
+"augroup windows_fullscreen
+"   autocmd!
+"   autocmd GUIEnter * simalt ~x
+"augroup END
 
 " BEGIN get cobol right align column from script {
 function! SetCobolRightAlignColumn()
@@ -300,6 +300,7 @@ function! SetCobolRightAlignColumn()
     endif
     
     " TODO: Check if get_right_align_column.pl is available.
+    " See:  :help expr-[:]  for '[:-2]'  :  Take all characters/bytes but the last one.
     let b:ra=system('get_right_align_column.pl ' . shellescape(expand('%')))[:-2]
     echom 'Setting right align column to ' . b:ra
 endfunction
@@ -307,26 +308,24 @@ endfunction
 let save_shellredir = &shellredir
 set shellredir=>
 
-" See:  :help expr-[:]  for '[:-2]' : Take all characters/bytes but the last one.
-autocmd BufEnter * call SetCobolRightAlignColumn()
 let &shellredir = save_shellredir
 " . END get cobol right align column from script }
 
-" todo: How to do this?
-"autocmd FocusGained,BufEnter if FileType = cobol setlocal colorcolumn=72 textwidth=72
-
 set autoread
 
-" Trigger `autoread` when files changes on disk
-" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
-    \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+augroup trigger_autoread
+    autocmd!
+    " Trigger `autoread` when files changes on disk
+    " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+    " https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+        \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
 
-" Notification after file change
-" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
-autocmd FileChangedShellPost *
-    \ echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None
+    " Notification after file change
+    " https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+    autocmd FileChangedShellPost *
+        \ echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None
+autocmd END
 
 " https://stackoverflow.com/questions/36900578/correct-syntax-highlighting-on-subroutine-signatures-in-vim
 let perl_sub_signatures=1
@@ -366,7 +365,17 @@ nnoremap <leader>gts "syiW/\v\c<<C-R>s\s+section<CR>zz:nohls<CR>
 nnoremap <leader>nh :nohls<CR>
 
 set makeprg=gmake
-autocmd FileType cobol :set indentexpr=
+
+" todo: How to do this?
+"autocmd FocusGained,BufEnter if FileType = cobol setlocal colorcolumn=72 textwidth=72
+
+augroup filetype_cobol
+    autocmd!
+    autocmd BufEnter * if $filetype == 'cobol' | call SetCobolRightAlignColumn() | endif
+    autocmd FileType cobol setlocal textwidth=72
+    autocmd FileType cobol setlocal colorcolumn=72
+    autocmd FileType cobol :set indentexpr=
+augroup END
 
 "nnoremap <C-_> :echo 'word [' . expand('<cword>') . '] has length' strlen(substitute(expand('<cword>'), '.', 'x', 'g'))<CR>
 nnoremap <leader>lw :echo 'word [' . expand('<cword>') . '] has length' strlen(expand('<cword>'))<CR>
