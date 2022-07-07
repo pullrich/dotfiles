@@ -1,4 +1,15 @@
 #!/bin/sh
 
 # todo: check if in .svn or .git and run the fitting command
-svn status "$@"
+set -u
+startpath=$(pwd)
+found_svn=0
+found_git=0
+while [ $(pwd) != '/' -a "$found_svn" = 0 -a "$found_git" = 0 ]; do
+    [ ! -z $(find . -maxdepth 1 -iname '.svn' -type d) ] && found_svn=1
+    [ ! -z $(find . -maxdepth 1 -iname '.git' -type d) ] && found_git=1
+    cd ..
+done
+cd "$startpath"
+if [ "$found_svn" = 1 ]; then svn status "$@"; fi
+if [ "$found_git" = 1 ]; then git status "$@"; fi
