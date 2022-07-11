@@ -371,7 +371,7 @@ set makeprg=gmake
 
 augroup filetype_cobol
     autocmd!
-    autocmd BufEnter * if $filetype == 'cobol' | call SetCobolRightAlignColumn() | endif
+    autocmd BufEnter * if &filetype == 'cobol' | call SetCobolRightAlignColumn() | endif
     autocmd FileType cobol setlocal textwidth=72
     autocmd FileType cobol setlocal colorcolumn=72
     autocmd FileType cobol :set indentexpr=
