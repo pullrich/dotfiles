@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+for file in "$@"
+do
+    header="${file} -------------------------------------------------------------------------------" 
+    echo "${header}" | cut -c 1-80
+    svn log "${file}" | grep -E '^r[[:digit:]]+ \| ' | head -n 5
+done
