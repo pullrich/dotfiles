@@ -1,0 +1,2 @@
+#!/bin/sh
+svn st --changelist "$1" | tail -n +3 | awk '{print $NF}' | xargs svn changelist "$2"
