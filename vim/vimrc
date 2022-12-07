@@ -200,6 +200,10 @@ nnoremap <leader>sv i<C-o>diw${<C-r>"}<ESC>l
 " mnemonic: sv" = shell variable with "-quotes
 nnoremap <leader>sv" i<C-o>diw"${<C-r>"}"<ESC>l
 
+" Substitute content of register 0 (default copy) with same content ... which
+" the user then modifies as needed.
+nnoremap <leader>s :%s,<C-r>0,<C-r>0,gc
+
 " Adjust first non-whitespace to column 44.
 "let @a='/\S44i 44|dw36|j'
 
