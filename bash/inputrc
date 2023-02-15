@@ -9,6 +9,10 @@ set convert-meta off
 # as meta-prefixed characters
 set output-meta on
 
+# If set to On, words which have more than one possible completion cause the
+# matches to be listed immediately instead of ringing the bell.set
+set show-all-if-ambiguous on
+
 # >>>>> set "missing" vi behaviour >>>>>
 set editing-mode vi
 
