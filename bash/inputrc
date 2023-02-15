@@ -16,8 +16,9 @@ set show-all-if-ambiguous on
 # >>>>> set "missing" vi behaviour >>>>>
 set editing-mode vi
 
-# todo ... read READLINE in bash manpage
-#set show-mode-in-prompt on
+# Add a character to the beginning of the prompt indicating the editing mode:
+# emacs (@), vi  command  (:)  or  vi insertion (+).
+set show-mode-in-prompt on
 
 # See man readline "VI Mode bindings" for default vi bindings.
 
