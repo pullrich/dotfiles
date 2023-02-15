@@ -23,7 +23,6 @@ set show-mode-in-prompt on
 # See man readline "VI Mode bindings" for default vi bindings.
 
 # http://www.usenix.org.uk/content/bash.html#input
-#vi mode
 $if mode=vi
 
 set keymap vi-command
