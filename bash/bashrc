@@ -16,6 +16,7 @@ _pathclean() {
 }
 
 pathappend() {
+  # Appends to path only if argument is an existing directory.
   local arg
   for arg in "$@"; do
     _pathclean "${arg}"
@@ -25,6 +26,7 @@ pathappend() {
 }
 
 pathprepend() {
+  # Prepends to path only if argument is an existing directory.
   local arg
   for arg in "$@"; do
     _pathclean "${arg}"
@@ -102,6 +104,7 @@ export SVN_EDITOR=vim
 # maybe add: --no-init
 export LESS='--ignore-case --RAW-CONTROL-CHARS --quit-if-one-screen --jump-target=.5'
 export SCRIPTS=${HOME}/scripts/general/
+export SNIPPETS=${HOME}/scripts/general/snippet-scripts
 
 # ---------------------------   Aliases   --------------------------------------
 alias h='fc -l'
@@ -111,20 +114,24 @@ alias m='$PAGER'
 alias c='clear'
 alias cd..='cd ..'
 alias cp='cp -v '
-alias gbi='gmake && gmake install' # (gmake) (b)uild and (i)nstall
-alias gmc='gmake clean' # gc should not be use because of it being the gnu-compiler
-alias gst='git status'
-alias vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session (end of day).
-#alias vi='vim'
-alias grep='grep --color=auto --extended-regexp'
-alias pcregrep='pcregrep --color=auto'
-alias gitgrep='git grep --color=auto --no-index --extended-regexp --all-match '
-alias perl6r='rlwrap perl6'
-alias dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
-alias aff='#sudo find . -iname '"'"'*filename*'"'"' -exec realpath {} \+'
+alias ,g='gmake '
+alias ,gbi='gmake && gmake install'                        # (gmake) (b)uild and (i)nstall
+alias ,gbior='gmake && gmake install && mp online restart' # (gmake) (b)uild and (i)nstall and (o)nline system (r)estart
+alias ,gi='gmake install'
+alias ,less='less -R'
+alias ,vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session (end of day).
+alias ,grep='grep --color=auto --extended-regexp'
+alias ,pcregrep='pcregrep --color=auto --buffer-size=1M'
+alias ,perl6r='rlwrap perl6'
+alias ,dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
+alias ,aff='#sudo find . -iname '"'"'*filename*'"'"' -exec realpath {} \+' # Template Alias
 alias rlwrap='rlwrap '
+alias sd='svn diff '
+alias sk='skdiff '
 alias rm='rm -Iv '
 alias mv='mv -v '
+alias xargs='xargs '
+alias 2null='2>/dev/null'
 
 # The space at the end is necessary for it to work!
 alias sudo='sudo '
@@ -150,29 +157,30 @@ alias pawk='perl -lF'"\'"'/ /'"\'"' -E '"\'"'print \$F[0]'"\'"
 # Verwende "\$(my_function)" im Prompt-String um einen Funktionsaufruf für jeden neuen Prompt-String zu tätigen.
 # \# command number of this command
 
-_ttyInfo=$(tty)
-_ttyInfo=${_ttyInfo##*dev/}
-#BASE_PROMPT="\u@\h:(tty:${_ttyInfo}):\wSHELL_LEVEL \t:\#"
-#BASE_PROMPT="\u@\h:(`tty | sed 's/\/dev\///'`):\wSHELL_LEVEL \t:\#"
-BASE_PROMPT="\u@\h:(`tty | sed 's,/dev/,,'`):[\w]SHELL_LEVEL \t (cn:\#)"
-#BASE_PROMPT="\u@\h:(${_ttyInfo}):\wSHELL_LEVEL \t:\#"
-
-#PROMPT_COMMAND=
-
-# Promp Definition 
-if [ "x$SHLVL" = "x1" ]; then
-    # replace SHELL_LEVEL with nothing
-    BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/}"
-else
-    # replace SHELL_LEVEL with variable value in parentheses
-    BASE_PROMPT="${BASE_PROMPT/SHELL_LEVEL/($SHLVL)}"
-fi
 # PSP Prompt String Part
 # see: https://unix.stackexchange.com/a/105974
-color_green="\[\e[1;32m\]"
-no_color="\[\e[00m\]"
+#color_green="\[\e[1;32m\]"
+color_green="\e[1;32m"
+#no_color="\[\e[00m\]"
+no_color="\e[00m"
 
-PS1="${color_green}${BASE_PROMPT}\n\$${no_color} "
+function prompt {
+    local _ttyInfo
+    _ttyInfo=$(tty)
+    _ttyInfo=${_ttyInfo##*dev/}
+
+    # For Readline's vi-(cmd|ins)-mode-string to work properly PS1 should be a single line string. (20220914)
+    # If colors should be used in PS1 for vi-mode use \1, \2 to begin and end sequences of non-printing characters.
+    # See also bash manual, Readline-Init-File, vi-xmd-mode-string for "\1 \2".
+    #PS1=' (cn:\#) $ '
+    # In front of PS1 the vi-mode-indicator is automatically displayed. (like: [+ $ my-cmd])
+    PS1=' $ '
+    #echo -e "${color_green}${USER}@${HOSTNAME}:($(tty | sed 's,/dev/,,')):[$(pwd)]($SHLVL) $(date '+%H:%M:%S')${no_color}"
+    echo -e "${color_green}${USER}@${HOSTNAME}:(${_ttyInfo}):[$(pwd)]($SHLVL) $(date '+%H:%M:%S')${no_color}"
+}
+
+
+PROMPT_COMMAND='prompt'
 
 PS2="\u@\h \w \! ++ "
 ## . END prompt definition }
@@ -183,13 +191,20 @@ set -o vi
 
 #-------------------------------------------------------------------------------
 
-pathappend \
-    ~/scripts/* \
-    /usr/local/go/bin
+pathappend "${HOME}/scripts/snippet-scripts" 
+pathappend "${HOME}/scripts/cobol" 
+pathappend "${HOME}/scripts/data" 
+pathappend "${HOME}/scripts/project" 
+pathappend "${HOME}/scripts/tmux" 
+pathappend "${HOME}/scripts/work" 
+pathappend "${HOME}/scripts/under_construction" 
+pathappend "${HOME}/scripts/xdo" 
+
+#pathappend /usr/local/go/bin
 
 bash_config_dir="${HOME}/.config/bash"
 if test -d "${bash_config_dir}"; then
-    files=$(find "${bash_config_dir}" -maxdepth 1 -regextype egrep -regex ".+\.(ba)?sh" -print)
+    files=$(find "${bash_config_dir}" -maxdepth 1 -regextype egrep -regex ".+\.(ba)?sh$" -print)
     for file in ${files}; do 
         . "${file}"
     done
@@ -206,12 +221,8 @@ function fcd() {
 
 #-------------------------------------------------------------------------------
 
-if [ -f ~/work.bashrc ]; then
-    . ~/work.bashrc
-fi
+test -r "${HOME}/work.bashrc" && . "${HOME}/work.bashrc"
 
-if [ -r "$HOME"/.rakubrew/bin/rakubrew ]; then
-    eval "$(${HOME}/.rakubrew/bin/rakubrew init Bash)"
-fi
+# Fuzzy Finder
+test -r "${HOME}/.fzf.bash" && source "${HOME}/.fzf.bash"
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
