@@ -1,3 +1,5 @@
+printf "in .bashrc\n"
+
 # ---------------------------   Functions    -----------------------------------
 
 # https://github.com/rwxrob/dot/blob/main/.bashrc
@@ -66,13 +68,18 @@ pathappend "${HOME}/scripts/general"
 # file permissions: rwxr-xr-x
 umask 022
 
-# if bash is interactive shell ... bind ... and allow Ctrl-S to search forward through history by deactivating XON/XOFF (in KDE Konsole)
-[[ $- = *i* ]] && bind TAB:menu-complete && stty -ixon
+# if bash is interactive shell ...
+if [[ $- = *i* ]]; then
+    # Aktiviere Tab-Vervollständigung.
+    #bind TAB:menu-complete
+    # siehe: https://superuser.com/questions/59175/is-there-a-way-to-make-bash-more-tab-friendly
+    # Mit Shift+Tab einen Eintrag in der Tab-Vervollständigung zurück gehen.
+    #bind '"\e[Z":menu-complete-backward'
 
-# Aktiviere Tab-Vervollständigung.
-# siehe: https://superuser.com/questions/59175/is-there-a-way-to-make-bash-more-tab-friendly
-# Mit Shift+Tab einen Eintrag in der Tab-Vervollständigung zurück gehen.
-bind '"\e[Z":menu-complete-backward'
+    # Allow Ctrl-S to search forward through history by deactivating XON/XOFF (in KDE Konsole)
+    stty -ixon
+fi
+
 
 # Netter Trick ...
 #     sudo ls -l | sudo dd of=/prod/test.txt
@@ -121,7 +128,7 @@ alias ,gi='gmake install'
 alias ,less='less -R'
 alias ,vimeod='vim -S ~/vimsessions/eod-session.vim' # start vim with eod-session (end of day).
 alias ,grep='grep --color=auto --extended-regexp'
-alias ,pcregrep='pcregrep --color=auto --buffer-size=1M'
+#alias ,pcregrep='pcregrep --color=auto --buffer-size=1M'
 alias ,perl6r='rlwrap perl6'
 alias ,dirsize="find . -type d -name '[!.]*' -exec du -sh {} +"
 alias ,aff='#sudo find . -iname '"'"'*filename*'"'"' -exec realpath {} \+' # Template Alias
